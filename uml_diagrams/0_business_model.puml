@@ -1,0 +1,56 @@
+@startuml CareLink_Business_Model_Canvas
+!theme plain
+title CareLink — Business Model Canvas
+
+skinparam rectangle {
+  FontSize 12
+  RoundCorner 10
+}
+skinparam defaultFontSize 11
+
+' ===================================================================
+' BUSINESS MODEL CANVAS — CareLink Healthcare Platform
+' ===================================================================
+
+rectangle "**🤝 Key Partners**\n\n• Hospitals & Clinics\n  (patient referrals, data integration)\n• Medical Laboratories\n  (lab test result uploads)\n• Insurance Companies\n  (claim verification via records)\n• Pharmacies\n  (medication cross-referencing)\n• Google Cloud / Supabase\n  (infrastructure & auth provider)\n• App Store / Google Play\n  (distribution channels)" as KP #E8F5E9
+
+rectangle "**⚙️ Key Activities**\n\n• Mobile app development\n  & maintenance (Flutter)\n• Doctor–Patient matching\n  & connection management\n• Electronic Medical Records\n  (EMR) management\n• Secure cloud storage of\n  lab tests & medical documents\n• User authentication &\n  role-based access control\n• QR code–based medical\n  info sharing\n• Customer support &\n  onboarding" as KA #E3F2FD
+
+rectangle "**💎 Value Proposition**\n\n**For Patients:**\n• Centralized digital health\n  record (allergies, meds,\n  surgeries, vaccines, labs,\n  chronic conditions)\n• Easy doctor discovery\n  & one-tap connection\n• Portable medical profile\n  via QR code sharing\n• Secure cloud backup of\n  all medical documents\n\n**For Doctors:**\n• Instant access to connected\n  patients' full medical history\n• Add surgeries & lab tests\n  with file uploads\n• Direct patient contact\n  (phone / WhatsApp)\n• Specialty-based discoverability\n  by patients\n\n**Overall:**\n• Eliminates paper records\n• Reduces medical errors\n• Faster diagnosis with\n  complete patient history" as VP #FFF9C4
+
+rectangle "**🤝 Customer Relationships**\n\n• Self-service mobile app\n  (patients manage own records)\n• Assisted service\n  (doctors manage surgeries\n  & lab tests for patients)\n• Automated onboarding\n  (guided walkthrough screens)\n• Push notifications\n  (appointment reminders,\n  medication alerts — future)\n• In-app support &\n  contact channels\n• Trust through data\n  privacy & encryption" as CR #F3E5F5
+
+rectangle "**👥 Customer Segments**\n\n**Primary:**\n• Patients seeking to\n  digitize & manage their\n  medical records\n• Doctors wanting quick\n  access to patient history\n\n**Secondary:**\n• Clinics & small hospitals\n  needing lightweight EMR\n• Elderly patients with\n  caregivers managing records\n• Chronic disease patients\n  needing ongoing tracking\n\n**Future:**\n• Insurance companies\n  (claims verification)\n• Laboratories\n  (direct result upload)\n• Pharmacies\n  (prescription management)" as CS #FFEBEE
+
+rectangle "**🔑 Key Resources**\n\n• Flutter mobile app (iOS/Android)\n• Supabase backend\n  (PostgreSQL + Auth + Storage)\n• Development team\n  (Flutter, backend, UI/UX)\n• Doctor specialty database\n• Medical data models\n  & validation logic\n• Brand & user trust\n• Cloud infrastructure\n  (hosting, CDN, storage)" as KR #E0F7FA
+
+rectangle "**📣 Channels**\n\n• Google Play Store\n• Apple App Store\n• Social media marketing\n  (Instagram, Facebook,\n  TikTok, LinkedIn)\n• Partnerships with clinics\n  & hospitals (B2B referrals)\n• Doctor word-of-mouth\n  & referrals\n• University health centers\n• Medical conferences\n  & health expos\n• SEO & content marketing\n  (health blog, app website)" as CH #FFF3E0
+
+rectangle "**💰 Revenue Streams**\n\n**Freemium Model:**\n• Free: Basic EMR management\n  (allergies, meds, conditions)\n• Premium Patient Plan:\n  — Unlimited lab test storage\n  — AI health insights (future)\n  — Medication reminders\n  — Export medical report PDF\n\n**Doctor Subscription:**\n• Monthly/Annual plan for\n  doctors to access advanced\n  patient management features\n• Verified doctor badge\n\n**B2B / Enterprise:**\n• Clinic/Hospital dashboard\n  license (multi-doctor access)\n• API access for lab integration\n\n**Future Revenue:**\n• Commission on telemedicine\n  appointments\n• Sponsored doctor listings\n• Insurance partnership fees\n• In-app pharmaceutical ads\n  (ethical, opt-in)" as RS #E8F5E9
+
+rectangle "**💸 Cost Structure**\n\n**Fixed Costs:**\n• Development team salaries\n• Supabase hosting & storage\n  (scales with usage)\n• App Store fees\n  (Apple $99/yr, Google $25)\n• Domain & SSL certificates\n\n**Variable Costs:**\n• Cloud storage (per GB)\n• SMS/Email notifications\n• Customer support\n• Marketing & user acquisition\n\n**Future Costs:**\n• AI/ML model training\n  & inference\n• Compliance & certifications\n  (HIPAA, GDPR)\n• Legal & data protection\n• Telemedicine infrastructure" as COST #FFEBEE
+
+rectangle "**🏆 Competitive Advantage**\n\n• Role-based dual experience\n  (patient + doctor in one app)\n• QR code medical profile\n  sharing (instant, offline)\n• Lightweight — no heavy\n  hospital IT integration needed\n• Real-time cloud sync\n  with Supabase\n• Clean, modern Flutter UI\n  (cross-platform iOS/Android)\n• Doctor specialty matching\n• Open to future AI integration\n  (diagnosis assist, drug\n  interaction alerts)" as CA #E0F2F1
+
+' ===================================================================
+' LAYOUT — Approximate Business Model Canvas grid
+' ===================================================================
+
+KP -[hidden]right-> KA
+KA -[hidden]right-> VP
+VP -[hidden]right-> CR
+CR -[hidden]right-> CS
+
+KR -[hidden]right-> CH
+
+KA -[hidden]down-> KR
+VP -[hidden]down-> CH
+CR -[hidden]down-> CH
+
+RS -[hidden]right-> COST
+COST -[hidden]right-> CA
+
+KR -[hidden]down-> RS
+CH -[hidden]down-> COST
+
+@enduml

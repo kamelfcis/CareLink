@@ -1,0 +1,189 @@
+@startuml CareLink_State_Diagram
+!theme plain
+title CareLink - State Diagram (Authentication & Navigation States)
+
+' ===========================
+' TOP-LEVEL APP STATES
+' ===========================
+
+[*] --> SplashState
+
+state SplashState {
+  [*] --> Loading : App launches
+  Loading --> CheckAuth : After 3s delay
+  CheckAuth --> Authenticated : currentUser != null\n& cached model exists
+  CheckAuth --> Unauthenticated : No session or\nno cached data
+}
+
+SplashState --> OnBoarding : [Unauthenticated]
+SplashState --> DoctorHome : [Authenticated & DoctorModel cached]
+SplashState --> PatientHome : [Authenticated & PatientModel cached]
+
+' ===========================
+' ONBOARDING / AUTH FLOW
+' ===========================
+
+state "Unauthenticated Flow" as UnauthFlow {
+  state OnBoarding
+  state GetStarted
+  state SelectRole
+  state SignIn
+  state SignUpAsDoctor
+  state SignUpAsPatient
+
+  OnBoarding --> GetStarted : Skip / Complete
+  GetStarted --> SelectRole : "Create Account"
+  GetStarted --> SignIn : "Sign In"
+  SelectRole --> SignUpAsDoctor : Role = Doctor
+  SelectRole --> SignUpAsPatient : Role = Patient
+  SignUpAsDoctor --> SignIn : Registration success
+  SignUpAsPatient --> SignIn : Registration success
+}
+
+' ===========================
+' SIGN-IN CUBIT STATES
+' ===========================
+
+state SignIn {
+  [*] --> SignInInitial
+  SignInInitial --> SignInLoading : Submit credentials
+  SignInLoading --> FetchingUserData : Auth successful
+  SignInLoading --> SignInFailure : Auth failed
+  FetchingUserData --> SignInSuccess : Data fetched & cached
+  FetchingUserData --> SignInFailure : Data fetch error
+  SignInFailure --> SignInInitial : Retry
+}
+
+SignIn --> DoctorHome : [SignInSuccess & role=doctor]
+SignIn --> PatientHome : [SignInSuccess & role=patient]
+
+' ===========================
+' SIGN-UP CUBIT STATES
+' ===========================
+
+state SignUpAsDoctor {
+  [*] --> DoctorFormIdle
+  DoctorFormIdle --> DoctorFormLoading : Submit form
+  DoctorFormLoading --> DoctorFormSuccess : Auth + DB insert OK
+  DoctorFormLoading --> DoctorFormFailure : Error
+  DoctorFormFailure --> DoctorFormIdle : Retry
+}
+
+state SignUpAsPatient {
+  [*] --> PatientFormIdle
+  PatientFormIdle --> PatientFormLoading : Submit form
+  PatientFormLoading --> PatientFormSuccess : Auth + DB insert OK
+  PatientFormLoading --> PatientFormFailure : Error
+  PatientFormFailure --> PatientFormIdle : Retry
+}
+
+' ===========================
+' DOCTOR HOME STATES
+' ===========================
+
+state DoctorHome {
+  [*] --> PatientsLoading
+  PatientsLoading --> PatientsLoaded : Patients fetched
+  PatientsLoading --> PatientsError : Fetch failed
+  PatientsLoaded --> PatientDetails : Select patient
+  PatientsError --> PatientsLoading : Retry
+  
+  state PatientDetails {
+    [*] --> ViewingDetails
+    ViewingDetails --> ViewAllergies
+    ViewingDetails --> ViewMedications
+    ViewingDetails --> ViewChronicConditions
+    ViewingDetails --> ViewSurgeries
+    ViewingDetails --> ViewLabTests
+    ViewingDetails --> ViewVaccinations
+    ViewingDetails --> ContactPatient
+    ViewingDetails --> GenerateQR
+    
+    state ViewSurgeries {
+      [*] --> SurgeriesLoading
+      SurgeriesLoading --> SurgeriesLoaded
+      SurgeriesLoaded --> AddingSurgery : Doctor adds surgery
+      AddingSurgery --> SurgeriesLoaded : Success
+    }
+    
+    state ViewLabTests {
+      [*] --> LabTestsLoading
+      LabTestsLoading --> LabTestsLoaded
+      LabTestsLoaded --> UploadingLabTest : Doctor adds lab test
+      UploadingLabTest --> LabTestsLoaded : Upload + Insert success
+    }
+  }
+}
+
+' ===========================
+' PATIENT HOME STATES
+' ===========================
+
+state PatientHome {
+  [*] --> DoctorsLoading
+  DoctorsLoading --> DoctorsLoaded : Doctors fetched
+  DoctorsLoading --> DoctorsError : Fetch failed
+  DoctorsLoaded --> DoctorDetails : Select doctor
+  DoctorsError --> DoctorsLoading : Retry
+  
+  state DoctorDetails {
+    [*] --> ViewingDoctor
+    ViewingDoctor --> ConnectingWithDoctor : "Connect" button
+    ConnectingWithDoctor --> ConnectionSuccess : DB insert OK
+    ConnectingWithDoctor --> ConnectionFailure : Error
+  }
+  
+  ' Patient Medical Data Management
+  state ManageMedicalData {
+    state "Allergies" as PA {
+      [*] --> AllergiesInit
+      AllergiesInit --> AllergiesLoaded
+      AllergiesLoaded --> AddingAllergy
+      AllergiesLoaded --> DeletingAllergy
+      AddingAllergy --> AllergiesLoaded
+      DeletingAllergy --> AllergiesLoaded
+    }
+    state "Medications" as PM {
+      [*] --> MedicationsInit
+      MedicationsInit --> MedicationsLoaded
+      MedicationsLoaded --> AddingMedication
+      MedicationsLoaded --> DeletingMedication
+      AddingMedication --> MedicationsLoaded
+      DeletingMedication --> MedicationsLoaded
+    }
+    state "Vaccinations" as PV {
+      [*] --> VaccinationsInit
+      VaccinationsInit --> VaccinationsLoaded
+      VaccinationsLoaded --> AddingVaccination
+      VaccinationsLoaded --> DeletingVaccination
+      AddingVaccination --> VaccinationsLoaded
+      DeletingVaccination --> VaccinationsLoaded
+    }
+  }
+}
+
+' ===========================
+' LOGOUT
+' ===========================
+
+DoctorHome --> LoggingOut : Logout
+PatientHome --> LoggingOut : Logout
+
+state LoggingOut {
+  [*] --> SigningOut
+  SigningOut --> ClearingCache : Supabase signOut OK
+  ClearingCache --> LogoutComplete : Cache cleared
+}
+
+LoggingOut --> OnBoarding : [LogoutComplete]
+
+@enduml
+
+
+
+
+
+
+
+
+

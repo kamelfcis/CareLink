@@ -1,0 +1,177 @@
+@startuml CareLink_Class_Diagram
+!theme plain
+title CareLink - Domain Class Diagram (Entity Relationship)
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam classHeaderBackgroundColor #E3F2FD
+skinparam classBorderColor #1565C0
+skinparam arrowColor #1565C0
+
+' ===========================
+' AUTH & USER ENTITIES
+' ===========================
+
+class User {
+  +id : UUID <<PK>>
+  +name : String
+  +email : String
+  +image : String
+  +phone : String
+  +role : String {doctor | patient}
+  +created_at : DateTime
+}
+
+class Patient {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→User>>
+  +gender : String
+  +blood_type : String
+  +height_cm : Decimal
+  +weight_kg : Decimal
+  +emergency_contact : JSONB
+  +date_of_birth : String
+  +created_at : DateTime
+  +updated_at : DateTime
+}
+
+class EmergencyContact <<Value Object>> {
+  +name : String
+  +relationship : String
+  +phone : String
+}
+
+class Doctor {
+  +id : UUID <<PK>>
+  +doctor_id : UUID <<FK→User>>
+  +specialty_id : UUID <<FK→DoctorSpecialty>>
+  +hospital : String
+  +bio : String
+}
+
+class DoctorSpecialty {
+  +id : UUID <<PK>>
+  +name : String
+  +description : String
+  +icon : String
+  +is_active : Boolean
+  +created_at : DateTime
+}
+
+' ===========================
+' JUNCTION TABLE
+' ===========================
+
+class DoctorPatient <<Junction>> {
+  +id : UUID <<PK>>
+  +doctor_id : UUID <<FK→Doctor>>
+  +patient_id : UUID <<FK→Patient>>
+  +created_at : DateTime
+  --
+  <<unique>> (doctor_id, patient_id)
+}
+
+' ===========================
+' MEDICAL RECORD ENTITIES
+' ===========================
+
+class Medication {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→Patient>>
+  +medication_name : String
+  +dosage : String
+  +frequency : String
+  +start_date : Date
+  +end_date : Date
+  +notes : String
+  +created_at : DateTime
+}
+
+class Surgery {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→Patient>>
+  +operation_name : String
+  +operation_date : Date
+  +notes : String
+  +created_at : DateTime
+}
+
+class LabTest {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→Patient>>
+  +test_name : String
+  +file_path : String
+  +test_date : Date
+  +test_number : String
+  +notes : String
+  +created_at : DateTime
+}
+
+class ChronicCondition {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→Patient>>
+  +name : String
+  +notes : String
+  +created_at : DateTime
+}
+
+class Allergy {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→Patient>>
+  +allergy_name : String
+  +severity : String {Mild|Moderate|Severe|Unknown}
+  +notes : String
+  +created_at : DateTime
+}
+
+class Vaccination {
+  +id : UUID <<PK>>
+  +patient_id : UUID <<FK→Patient>>
+  +vaccine_name : String
+  +dose_number : Integer
+  +vaccination_date : Date
+  +notes : String
+  +created_at : DateTime
+}
+
+' ===========================
+' STORAGE BUCKETS
+' ===========================
+
+class StorageBucket <<Infrastructure>> {
+  lab-tests
+  patient-photos
+  medical-documents
+  carelink-files
+  user-avatars
+}
+
+' ===========================
+' RELATIONSHIPS
+' ===========================
+
+User "1" -- "0..1" Patient : has profile >
+User "1" -- "0..1" Doctor : has profile >
+Doctor "1" -- "1" DoctorSpecialty : specializes in >
+Doctor "1" -- "0..*" DoctorPatient : manages >
+Patient "1" -- "0..*" DoctorPatient : treated by >
+Patient "1" *-- "0..*" Medication : has >
+Patient "1" *-- "0..*" Surgery : has >
+Patient "1" *-- "0..*" LabTest : has >
+Patient "1" *-- "0..*" ChronicCondition : has >
+Patient "1" *-- "0..*" Allergy : has >
+Patient "1" *-- "0..*" Vaccination : has >
+Patient "1" *-- "0..1" EmergencyContact : contains >
+LabTest ..> StorageBucket : uploads files to
+User ..> StorageBucket : uploads avatar to
+
+@enduml
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,126 @@
+@startuml CareLink_Activity_Diagram
+!theme plain
+title CareLink - Activity Diagram (App Navigation Flow)
+
+start
+
+:Launch App;
+:Show Splash Screen;
+:Wait 3 seconds;
+
+if (User authenticated\n& cached data exists?) then (yes)
+  if (Cached DoctorModel?) then (yes)
+    :Navigate to\n**Doctor Home Screen**;
+    fork
+      :View My Patients;
+      :Select a Patient;
+      :View Patient Details;
+      fork
+        :View Allergies;
+      fork again
+        :View Medications;
+      fork again
+        :View Chronic Conditions;
+      fork again
+        :View Surgeries\n(Add Surgery);
+      fork again
+        :View Lab Tests\n(Add Lab Test + Upload);
+      fork again
+        :View Vaccinations;
+      fork again
+        :Generate QR Code;
+      fork again
+        :Contact Patient\n(Phone / WhatsApp);
+      end fork
+    fork again
+      :Log Out;
+      :Clear Cache;
+      :Navigate to Sign In;
+      stop
+    end fork
+  else (no - PatientModel cached)
+    :Navigate to\n**Patient Home Screen**;
+    fork
+      :Browse Available Doctors;
+      :View Doctor Details;
+      :Connect with Doctor;
+    fork again
+      :Manage Allergies\n(Add / View / Delete);
+    fork again
+      :Manage Medications\n(Add / View / Delete);
+    fork again
+      :Manage Chronic Conditions\n(Add / View / Delete);
+    fork again
+      :Manage Vaccinations\n(Add / View / Delete);
+    fork again
+      :View Surgeries;
+    fork again
+      :View Lab Tests;
+    fork again
+      :View / Edit Profile;
+    fork again
+      :Settings;
+      :Log Out;
+      :Clear Cache;
+      :Navigate to Sign In;
+      stop
+    end fork
+  endif
+else (no)
+  :Show OnBoarding Screen;
+  :Show Get Started Screen;
+  
+  if (Already has account?) then (yes)
+    :Navigate to **Sign In Screen**;
+    :Enter email & password;
+    
+    if (Sign In successful?) then (yes)
+      :Fetch User Data\n(role-based);
+      :Cache Model Locally;
+      if (Role == Doctor?) then (yes)
+        :Navigate to\n**Doctor Home Screen**;
+      else (Patient)
+        :Navigate to\n**Patient Home Screen**;
+      endif
+    else (no)
+      :Show Error Message;
+      :Retry Sign In;
+    endif
+    
+  else (no)
+    :Navigate to\n**Select Role Screen**;
+    
+    if (Selected Role?) then (Doctor)
+      :Fill Doctor Registration Form\n(name, email, phone, password,\nbio, hospital, specialty);
+      :Pick Profile Image;
+      :Submit Registration;
+      :Create Auth User → Supabase;
+      :Upload Avatar → Storage;
+      :Insert User (role=doctor) → DB;
+      :Insert Doctor → DB;
+      :Navigate to Sign In;
+    else (Patient)
+      :Fill Patient Registration Form\n(name, email, phone, password,\ngender, DOB, blood type,\nheight, weight, emergency contact);
+      :Pick Profile Image;
+      :Submit Registration;
+      :Create Auth User → Supabase;
+      :Upload Avatar → Storage;
+      :Insert User (role=patient) → DB;
+      :Insert Patient → DB;
+      :Navigate to Sign In;
+    endif
+  endif
+endif
+
+stop
+
+@enduml
+
+
+
+
+
+
+
+
+

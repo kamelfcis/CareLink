@@ -1,0 +1,113 @@
+@startuml CareLink_Sequence_PatientInApp
+!theme plain
+title Sequence Diagram 1: Patient In-App Flow
+
+actor "Patient" as P
+participant "App" as App
+participant "Gemini AI" as AI
+database "Supabase" as DB
+
+== Browse & Search Doctors ==
+P -> App : open Home Screen
+App -> DB : get all doctors
+DB --> App : doctors list
+App --> P : display doctors
+
+P -> App : search / filter by specialty
+App --> P : filtered results
+
+== View Doctor & Connect ==
+P -> App : tap on doctor
+App --> P : show doctor profile
+
+P -> App : tap "Connect"
+App -> DB : save connection
+DB --> App : success
+App --> P : "Connected successfully!"
+
+P -> App : tap Call / WhatsApp
+App --> P : open dialer or WhatsApp
+
+== Medical Records ==
+P -> App : open Profile
+App --> P : show personal info\n& medical records grid
+
+P -> App : tap a record section\n(e.g. Medications)
+App -> DB : get records
+DB --> App : records list
+App --> P : display records
+
+P -> App : add new record
+App -> DB : save record
+DB --> App : success
+App --> P : record added
+
+P -> App : delete a record
+App -> DB : delete record
+DB --> App : success
+App --> P : record removed
+
+== My Doctors ==
+P -> App : open My Doctors
+App -> DB : get connected doctors
+DB --> App : doctors list
+App --> P : display my doctors
+
+== AI Chatbot ==
+P -> App : open Chatbot
+P -> App : send message or image
+App -> AI : forward to Gemini AI
+AI --> App : AI response
+App --> P : display response
+
+== Settings ==
+P -> App : change language
+App --> P : switch (AR / EN)
+
+P -> App : logout
+App -> DB : sign out
+App --> P : go to Sign In
+
+@enduml
+
+
+@startuml CareLink_Sequence_DoctorInApp
+!theme plain
+title Sequence Diagram 2: Doctor In-App Flow
+
+actor "Doctor" as D
+participant "App" as App
+participant "Gemini AI" as AI
+database "Supabase" as DB
+
+== View Connected Patients ==
+D -> App : open Home Screen
+App -> DB : get connected patients
+DB --> App : patients list
+App --> D : display patient cards
+
+D -> App : search patients
+App --> D : filtered results
+
+== View Patient Details ==
+D -> App : tap on patient
+App --> D : show patient profile
+
+== Contact Patient ==
+D -> App : tap Call / WhatsApp / QR
+App --> D : open dialer,\nWhatsApp, or QR code
+
+== View Patient Medical Records ==
+D -> App : tap a record section\n(e.g. Allergies)
+App -> DB : get records
+DB --> App : records list
+App --> D : display records (read-only)
+
+== AI Chatbot ==
+D -> App : open Chatbot
+D -> App : send message or image
+App -> AI : forward to Gemini AI
+AI --> App : AI response
+App --> D : display response
+
+@enduml

@@ -1,0 +1,155 @@
+@startuml CareLink_Component_Diagram
+!theme plain
+title CareLink - Application Architecture (Component Diagram)
+
+skinparam componentStyle rectangle
+skinparam componentBackgroundColor #E3F2FD
+skinparam componentBorderColor #1565C0
+skinparam packageBackgroundColor #FAFAFA
+skinparam packageBorderColor #455A64
+skinparam databaseBackgroundColor #FFF3E0
+skinparam cloudBackgroundColor #F3E5F5
+
+' ===========================
+' PRESENTATION LAYER
+' ===========================
+package "Presentation Layer (Views / Screens)" as PL {
+  component [Splash Screen] as Splash
+  component [OnBoarding Screen] as OnBoard
+  component [Sign In Screen] as SignIn
+  component [Sign Up (Patient)] as SignUpP
+  component [Sign Up (Doctor)] as SignUpD
+  component [Patient Home Screen\n(Browse Doctors)] as PatHome
+  component [Doctor Home Screen\n(View Patients)] as DocHome
+  component [Doctor Details Screen] as DocDetails
+  component [Patient Details Screen\n(Medical Records)] as PatDetails
+  component [Allergies Screen] as AllergyS
+  component [Medications Screen] as MedS
+  component [Surgeries Screen] as SurgS
+  component [Lab Tests Screen] as LabS
+  component [Chronic Conditions Screen] as ChronS
+  component [Vaccinations Screen] as VaccS
+  component [Profile Screen] as ProfS
+  component [Settings Screen] as SetS
+}
+
+' ===========================
+' STATE MANAGEMENT LAYER (BLoC/Cubit)
+' ===========================
+package "State Management Layer (Cubits)" as SML {
+  component [SignInCubit] as SIC
+  component [SignUpAsPatientCubit] as SUPC
+  component [SignUpAsDoctorCubit] as SUDC
+  component [DoctorsCubit] as DC
+  component [PatientsCubit] as PC
+  component [ConnectWithDoctorCubit] as CDC
+  component [AllergiesCubit] as AC
+  component [MedicationsCubit] as MC
+  component [SurgeriesCubit] as SC
+  component [LabTestsCubit] as LC
+  component [ChronicConditionsCubit] as CCC
+  component [VaccinationsCubit] as VC
+}
+
+' ===========================
+' CORE / NETWORK LAYER
+' ===========================
+package "Core / Network Layer" as NL {
+  component [signUpWithPassword()] as AuthSignUp
+  component [signInWithPassword()] as AuthSignIn
+  component [GoogleAuthService] as GoogleAuth
+  component [addData() - Upsert] as AddData
+  component [getData()] as GetData
+  component [getDataWithSpecificId()] as GetDataId
+  component [uploadFileToSupabaseStorage()] as UploadFile
+}
+
+' ===========================
+' DEPENDENCY INJECTION & CACHING
+' ===========================
+package "Infrastructure" as Infra {
+  component [GetIt (DI Container)] as DI
+  component [CacheHelper\n(SharedPreferences)] as Cache
+}
+
+' ===========================
+' EXTERNAL SERVICES
+' ===========================
+cloud "Supabase Cloud" as SupaCloud {
+  database "PostgreSQL\n(Auth + Database)" as PGDB
+  database "Supabase Storage\n(File Buckets)" as SStorage
+}
+
+' ===========================
+' CONNECTIONS
+' ===========================
+
+' Presentation → State Management
+SignIn ..> SIC
+SignUpP ..> SUPC
+SignUpD ..> SUDC
+PatHome ..> DC
+DocHome ..> PC
+DocDetails ..> CDC
+PatDetails ..> AC
+PatDetails ..> MC
+PatDetails ..> SC
+PatDetails ..> LC
+AllergyS ..> AC
+MedS ..> MC
+SurgS ..> SC
+LabS ..> LC
+ChronS ..> CCC
+VaccS ..> VC
+
+' State Management → Core/Network
+SIC ..> AuthSignIn
+SIC ..> GetDataId
+SIC ..> Cache
+SUPC ..> AuthSignUp
+SUPC ..> AddData
+SUPC ..> UploadFile
+SUDC ..> AuthSignUp
+SUDC ..> AddData
+SUDC ..> UploadFile
+SUDC ..> GetData
+DC ..> GetData
+PC ..> GetDataId
+CDC ..> AddData
+AC ..> GetDataId
+MC ..> GetDataId
+SC ..> GetDataId
+LC ..> GetDataId
+LC ..> UploadFile
+CCC ..> GetDataId
+VC ..> GetDataId
+
+' Core/Network → Supabase
+AuthSignUp --> PGDB
+AuthSignIn --> PGDB
+GoogleAuth --> PGDB
+AddData --> PGDB
+GetData --> PGDB
+GetDataId --> PGDB
+UploadFile --> SStorage
+
+' Infrastructure
+DI ..> Cache
+DI ..> PGDB : provides SupabaseClient
+
+' Splash routing
+Splash ..> Cache : checks cached user
+Splash ..> PatHome : patient route
+Splash ..> DocHome : doctor route
+Splash ..> OnBoard : no session
+
+@enduml
+
+
+
+
+
+
+
+
+

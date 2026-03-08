@@ -1,0 +1,138 @@
+@startuml CareLink_UseCase_Diagram
+!theme plain
+title CareLink - Use Case Diagram
+
+left to right direction
+skinparam actorStyle awesome
+skinparam usecaseFontSize 12
+skinparam actorFontSize 13
+skinparam packageFontSize 14
+skinparam usecaseBackgroundColor #E3F2FD
+skinparam usecaseBorderColor #1565C0
+skinparam packageBorderColor #0D47A1
+
+' ===========================
+' ACTORS
+' ===========================
+actor "Patient" as patient #90CAF9
+actor "Doctor" as doctor #A5D6A7
+actor "Guest / Visitor" as guest #FFF9C4
+actor "Supabase Auth" as auth #FFCCBC
+actor "Supabase Storage" as storage #D1C4E9
+
+' ===========================
+' AUTHENTICATION PACKAGE
+' ===========================
+rectangle "Authentication" as AuthPkg {
+  usecase "Sign Up as Patient" as UC_SignUpPatient
+  usecase "Sign Up as Doctor" as UC_SignUpDoctor
+  usecase "Sign In (Email/Password)" as UC_SignIn
+  usecase "Sign In with Google" as UC_GoogleSignIn
+  usecase "Forget Password" as UC_ForgetPassword
+  usecase "Log Out" as UC_Logout
+  usecase "Select Role\n(Doctor / Patient)" as UC_SelectRole
+}
+
+' ===========================
+' PATIENT FEATURES
+' ===========================
+rectangle "Patient Features" as PatientPkg {
+  usecase "View Available Doctors" as UC_ViewDoctors
+  usecase "View Doctor Details" as UC_DoctorDetails
+  usecase "Connect with Doctor" as UC_ConnectDoctor
+  usecase "Manage Medications\n(Add / View / Delete)" as UC_Medications
+  usecase "Manage Allergies\n(Add / View / Delete)" as UC_Allergies
+  usecase "Manage Chronic Conditions\n(Add / View / Delete)" as UC_Chronic
+  usecase "Manage Vaccinations\n(Add / View / Delete)" as UC_Vaccinations
+  usecase "View Surgeries" as UC_ViewSurgeries
+  usecase "View Lab Tests" as UC_ViewLabTests
+  usecase "View / Edit Profile" as UC_PatientProfile
+  usecase "Settings & Preferences" as UC_Settings
+}
+
+' ===========================
+' DOCTOR FEATURES
+' ===========================
+rectangle "Doctor Features" as DoctorPkg {
+  usecase "View My Patients" as UC_ViewPatients
+  usecase "View Patient Details\n& Medical Records" as UC_PatientDetails
+  usecase "Add Surgery\nfor Patient" as UC_AddSurgery
+  usecase "Add Lab Test\nfor Patient" as UC_AddLabTest
+  usecase "Generate / Share\nQR Code" as UC_QRCode
+  usecase "Contact Patient\n(Phone / WhatsApp)" as UC_ContactPatient
+}
+
+' ===========================
+' SHARED / SYSTEM
+' ===========================
+rectangle "System" as SystemPkg {
+  usecase "Upload File\n(Avatar / Lab Test)" as UC_Upload
+  usecase "Cache User Data\nLocally" as UC_Cache
+  usecase "View OnBoarding" as UC_OnBoarding
+}
+
+' ===========================
+' RELATIONSHIPS
+' ===========================
+
+' -- Patient --
+patient --> UC_SignUpPatient
+patient --> UC_SignIn
+patient --> UC_GoogleSignIn
+patient --> UC_Logout
+patient --> UC_ViewDoctors
+patient --> UC_DoctorDetails
+patient --> UC_ConnectDoctor
+patient --> UC_Medications
+patient --> UC_Allergies
+patient --> UC_Chronic
+patient --> UC_Vaccinations
+patient --> UC_ViewSurgeries
+patient --> UC_ViewLabTests
+patient --> UC_PatientProfile
+patient --> UC_Settings
+
+' -- Doctor --
+doctor --> UC_SignUpDoctor
+doctor --> UC_SignIn
+doctor --> UC_GoogleSignIn
+doctor --> UC_Logout
+doctor --> UC_ViewPatients
+doctor --> UC_PatientDetails
+doctor --> UC_AddSurgery
+doctor --> UC_AddLabTest
+doctor --> UC_QRCode
+doctor --> UC_ContactPatient
+
+' -- Guest --
+guest --> UC_OnBoarding
+guest --> UC_SelectRole
+
+' -- System Actors --
+UC_SignUpPatient ..> auth : <<uses>>
+UC_SignUpDoctor ..> auth : <<uses>>
+UC_SignIn ..> auth : <<uses>>
+UC_GoogleSignIn ..> auth : <<uses>>
+UC_Upload ..> storage : <<uses>>
+UC_AddLabTest ..> UC_Upload : <<include>>
+UC_SignUpPatient ..> UC_Upload : <<include>>
+UC_SignUpDoctor ..> UC_Upload : <<include>>
+UC_SignIn ..> UC_Cache : <<include>>
+
+' -- Extends --
+UC_DoctorDetails .> UC_ConnectDoctor : <<extend>>
+UC_PatientDetails .> UC_AddSurgery : <<extend>>
+UC_PatientDetails .> UC_AddLabTest : <<extend>>
+UC_PatientDetails .> UC_QRCode : <<extend>>
+UC_PatientDetails .> UC_ContactPatient : <<extend>>
+
+@enduml
+
+
+
+
+
+
+
+
+

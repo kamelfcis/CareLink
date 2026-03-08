@@ -1,0 +1,550 @@
+{
+  "@@locale": "en",
+
+  "appName": "CareLink",
+
+  "success": "Success",
+  "error": "Error",
+  "retry": "Retry",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "save": "Save",
+  "edit": "Edit",
+  "add": "Add",
+  "close": "Close",
+  "notes": "Notes",
+  "viewMore": "View more...",
+  "notesOptional": "Notes (Optional)",
+  "added": "Added:",
+  "selectDate": "Select date",
+  "deleteConfirmation": "Delete Confirmation",
+  "actionCannotBeUndone": "This action cannot be undone",
+  "adding": "Adding...",
+  "loading": "Loading...",
+  "notesMinLength": "Notes should be at least 5 characters",
+
+  "welcomeBack": "Welcome Back!",
+  "signInToContinue": "Sign in to continue",
+  "emailAddress": "Email Address",
+  "enterYourEmail": "Enter your email",
+  "password": "Password",
+  "enterYourPassword": "Enter your password",
+  "rememberMe": "Remember Me",
+  "forgotPassword": "Forgot Password?",
+  "signIn": "Sign In",
+  "orSignInWith": "or sign in with",
+  "dontHaveAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "alreadyHaveAccount": "Already have an account?",
+
+  "createAccount": "Create Account",
+  "joinAsPatient": "Join CareLink as a Patient",
+  "joinAsDoctor": "Join CareLink as a Doctor",
+  "fullName": "Full Name",
+  "enterYourFullName": "Enter your full name",
+  "phoneNumber": "Phone Number",
+  "enterYourPhoneNumber": "Enter your phone number",
+  "selectYourGender": "Select Your Gender",
+  "male": "Male",
+  "female": "Female",
+  "dateOfBirth": "Date of Birth",
+  "selectDateOfBirth": "Select Date of Birth",
+  "specialization": "Specialization",
+  "enterYourSpecialization": "Enter your specialization",
+
+  "chooseYourRole": "Choose Your Role",
+  "selectHowToUse": "Select how you'd like to use CareLink",
+  "imAPatient": "I'm a Patient",
+  "trackHealthRecords": "Track health records and connect with doctors",
+  "imADoctor": "I'm a Doctor",
+  "managePatients": "Manage patients and their records",
+
+  "helloDr": "Hello, Dr. {name}",
+  "@helloDr": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "helloUser": "Hello, {name}",
+  "@helloUser": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "managePatientsToday": "Manage your patients today",
+  "manageYour": "Manage Your",
+  "patients": "Patients",
+  "searchPatients": "Search patients...",
+  "noPatientsYet": "No patients assigned yet",
+  "noPatientsDesc": "Your patients will appear here once they connect with you.",
+
+  "account": "Account",
+  "profile": "Profile",
+  "app": "App",
+  "language": "Language",
+  "privacyPolicy": "Privacy Policy",
+  "notifications": "Notifications",
+  "theme": "Theme",
+  "helpAndSupport": "Help & Support",
+  "about": "About",
+  "logOut": "Log Out",
+  "general": "General",
+  "arabic": "العربية",
+  "english": "English",
+  "settings": "Settings",
+  "darkMode": "Dark Mode",
+
+  "careLinkAI": "CareLink AI",
+  "online": "Online",
+  "askMeAnything": "Ask me anything about health...",
+  "typeYourMessage": "Type your message...",
+  "analyzeAnImage": "Analyze an image",
+  "sendAVoiceNote": "Send a voice note",
+  "commonFluSymptoms": "What are common symptoms of flu?",
+  "healthyDiet": "How to maintain a healthy diet?",
+  "speechRecognitionError": "Speech recognition error: {error}",
+  "@speechRecognitionError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "speechNotAvailable": "Speech recognition not available on this device.",
+  "failedSpeechRecognition": "Failed to start speech recognition: {error}",
+  "@failedSpeechRecognition": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "aiChat": "AI Chat",
+  "sorryNoResponse": "Sorry, I could not generate a response.",
+  "failedToAnalyzeImage": "Failed to analyze image. Please try again.",
+
+  "skip": "Skip",
+  "next": "Next",
+  "getStarted": "Get Started",
+  "onboardingTitle1": "Your Health, Our Priority",
+  "onboardingDesc1": "Track your health records and stay connected with your healthcare providers.",
+  "onboardingTitle2": "Connect with Doctors",
+  "onboardingDesc2": "Find and connect with qualified doctors for personalized care.",
+  "onboardingTitle3": "Track Your Records",
+  "onboardingDesc3": "Keep all your medical records organized and accessible anytime.",
+
+  "chronicConditions": "Chronic Conditions",
+  "manageChronicConditions": "Manage your chronic conditions",
+  "addCondition": "Add Condition",
+  "conditionAddedSuccess": "Condition added successfully",
+  "conditionDeletedSuccess": "Condition deleted successfully",
+  "addNewCondition": "Add New Condition",
+  "fillConditionDetails": "Fill in the condition details below",
+  "conditionName": "Condition Name *",
+  "pleaseEnterConditionName": "Please enter a condition name",
+  "noConditionsYet": "No conditions yet",
+  "addFirstCondition": "Tap the + button below to add your first condition.",
+  "conditionOptions": "Condition Options",
+  "deleteCondition": "Delete Condition",
+  "editCondition": "Edit Condition",
+  "confirmDeleteCondition": "Are you sure you want to delete this condition? This action cannot be undone.",
+
+  "allergies": "Allergies",
+  "manageAllergies": "Manage your known allergies",
+  "addAllergy": "Add Allergy",
+  "allergyAddedSuccess": "Allergy added successfully",
+  "allergyDeletedSuccess": "Allergy deleted successfully",
+  "addNewAllergy": "Add New Allergy",
+  "fillAllergyDetails": "Fill in the allergy details below",
+  "allergyName": "Allergy Name *",
+  "pleaseEnterAllergyName": "Please enter an allergy name",
+  "severity": "Severity",
+  "selectSeverityOptional": "Select severity (Optional)",
+  "mild": "Mild",
+  "moderate": "Moderate",
+  "severe": "Severe",
+  "unknown": "Unknown",
+  "noAllergiesYet": "No allergies yet",
+  "addFirstAllergy": "Tap the + button below to add your first allergy.",
+  "allergyOptions": "Allergy Options",
+  "deleteAllergy": "Delete Allergy",
+  "editAllergy": "Edit Allergy",
+  "confirmDeleteAllergy": "Are you sure you want to delete this allergy? This action cannot be undone.",
+  "severityLabel": "Severity: {severity}",
+  "@severityLabel": {
+    "placeholders": {
+      "severity": { "type": "String" }
+    }
+  },
+
+  "medications": "Medications",
+  "manageCurrentMedications": "Manage your current medications",
+  "addMedication": "Add Medication",
+  "medicationAddedSuccess": "Medication added successfully",
+  "medicationDeletedSuccess": "Medication deleted successfully",
+  "addNewMedication": "Add New Medication",
+  "fillMedicationDetails": "Fill in the medication details below",
+  "medicationName": "Medication Name *",
+  "pleaseEnterMedicationName": "Please enter a medication name",
+  "dosage": "Dosage (e.g., 1 tablet)",
+  "dosageLabel": "Dosage",
+  "dosageMinLength": "Dosage should be at least 2 characters",
+  "frequency": "Frequency (e.g., daily)",
+  "frequencyLabel": "Frequency",
+  "frequencyMinLength": "Frequency should be at least 2 characters",
+  "startDate": "Start Date *",
+  "startDateLabel": "Start Date",
+  "endDateOptional": "End Date (Optional)",
+  "endDateLabel": "End Date",
+  "noMedicationsYet": "No medications yet",
+  "addFirstMedication": "Tap the + button below to add your first medication.",
+  "medicationOptions": "Medication Options",
+  "deleteMedication": "Delete Medication",
+  "editMedication": "Edit Medication",
+  "confirmDeleteMedication": "Are you sure you want to delete this medication? This action cannot be undone.",
+  "startDateRequired": "Start date is required",
+  "endDateAfterStart": "End date must be after start date",
+  "dosageValue": "Dosage: {value}",
+  "@dosageValue": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "frequencyValue": "Freq: {value}",
+  "@frequencyValue": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "startValue": "Start: {date}",
+  "@startValue": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "endValue": "End: {date}",
+  "@endValue": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+
+  "vaccinations": "Vaccinations",
+  "trackVaccinationHistory": "Track your vaccination history",
+  "addVaccination": "Add Vaccination",
+  "vaccinationAddedSuccess": "Vaccination added successfully",
+  "vaccinationDeletedSuccess": "Vaccination deleted successfully",
+  "addNewVaccination": "Add New Vaccination",
+  "fillVaccinationDetails": "Fill in the vaccination details below",
+  "vaccineName": "Vaccine Name *",
+  "pleaseEnterVaccineName": "Please enter a vaccine name",
+  "doseNumberOptional": "Dose Number (Optional)",
+  "enterDoseNumber": "Enter dose number",
+  "doseNumberPositive": "Dose number must be a positive integer",
+  "vaccinationDate": "Vaccination Date *",
+  "vaccinationDateRequired": "Vaccination date is required",
+  "noVaccinationsYet": "No vaccinations yet",
+  "addFirstVaccination": "Tap the + button below to add your first vaccination.",
+  "vaccinationOptions": "Vaccination Options",
+  "deleteVaccination": "Delete Vaccination",
+  "editVaccination": "Edit Vaccination",
+  "confirmDeleteVaccination": "Are you sure you want to delete this vaccination? This action cannot be undone.",
+  "doseLabel": "Dose {number}",
+  "@doseLabel": {
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+  "dateLabel": "Date",
+
+  "surgeries": "Surgeries",
+  "trackSurgicalHistory": "Track your surgical history",
+  "addSurgery": "Add Surgery",
+  "surgeryAddedSuccess": "Surgery added successfully",
+  "surgeryDeletedSuccess": "Surgery deleted successfully",
+  "addNewSurgery": "Add New Surgery",
+  "fillSurgeryDetails": "Fill in the surgery details below",
+  "operationName": "Operation Name *",
+  "pleaseEnterOperationName": "Please enter an operation name",
+  "operationDateOptional": "Operation Date (Optional)",
+  "operationDate": "Operation Date",
+  "noSurgeriesYet": "No surgeries yet",
+  "addFirstSurgery": "Tap the + button below to add your first surgery.",
+  "surgeryOptions": "Surgery Options",
+  "deleteSurgery": "Delete Surgery",
+  "editSurgery": "Edit Surgery",
+  "confirmDeleteSurgery": "Are you sure you want to delete this surgery? This action cannot be undone.",
+
+  "labTests": "Lab Tests",
+  "trackLabTestResults": "Track your lab test results",
+  "addLabTest": "Add Lab Test",
+  "labTestAddedSuccess": "Lab test added successfully",
+  "labTestDeletedSuccess": "Lab test deleted successfully",
+  "addNewLabTest": "Add New Lab Test",
+  "fillLabTestDetails": "Fill in the lab test details below",
+  "testName": "Test Name *",
+  "pleaseEnterTestName": "Please enter a test name",
+  "testNumberOptional": "Test Number (Optional)",
+  "testNumberMinLength": "Test number should be at least 2 characters",
+  "testDateOptional": "Test Date (Optional)",
+  "testResultImage": "Test Result Image (Optional)",
+  "tapToSelectImage": "Tap to select image",
+  "removeImage": "Remove Image",
+  "noLabTestsYet": "No lab tests yet",
+  "addFirstLabTest": "Tap the + button below to add your first lab test.",
+  "labTestOptions": "Lab Test Options",
+  "deleteLabTest": "Delete Lab Test",
+  "editLabTest": "Edit Lab Test",
+  "confirmDeleteLabTest": "Are you sure you want to delete this lab test? This action cannot be undone.",
+  "testNumber": "Test Number",
+  "testDate": "Test Date",
+  "resultImage": "Result Image:",
+  "unnamedTest": "Unnamed Test",
+  "testNumberValue": "Test #: {number}",
+  "@testNumberValue": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+  "testDateValue": "Test Date: {date}",
+  "@testDateValue": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "failedToUploadImage": "Failed to upload image",
+
+  "gender": "Gender",
+  "bloodType": "Blood Type",
+  "weight": "Weight",
+  "height": "Height",
+  "emergencyContact": "Emergency Contact",
+  "name": "Name",
+  "relationship": "Relationship",
+  "phone": "Phone",
+  "medicalRecords": "Medical Records",
+  "chronicDiseases": "Chronic Diseases",
+  "mobile": "Mobile",
+  "whatsApp": "WhatsApp",
+  "qrCode": "QR Code",
+  "connect": "Connect",
+  "weightKg": "{weight} kg",
+  "@weightKg": {
+    "placeholders": {
+      "weight": { "type": "String" }
+    }
+  },
+  "heightCm": "{height} cm",
+  "@heightCm": {
+    "placeholders": {
+      "height": { "type": "String" }
+    }
+  },
+
+  "yourHealthDashboard": "Your Health Dashboard",
+  "searchDoctors": "Search doctors...",
+  "topDoctors": "Top Doctors",
+  "seeAll": "See All",
+  "myProfile": "My Profile",
+  "personalInformation": "Personal Information",
+  "editProfile": "Edit Profile",
+
+  "errorPrefix": "Error: {message}",
+  "@errorPrefix": {
+    "placeholders": {
+      "message": { "type": "String" }
+    }
+  },
+  "addedDate": "Added: {date}",
+  "@addedDate": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+
+  "myDoctors": "My Doctors",
+  "doctorsConnectedWith": "Doctors you connected with",
+  "rateUs": "Rate Us",
+  "contactUs": "Contact Us",
+  "support": "Support",
+  "loggingOut": "Logging out...",
+  "loggedOutSuccess": "Logged out successfully",
+  "errorLoggingOut": "Error logging out: {error}",
+  "@errorLoggingOut": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pleaseEnterEmail": "Please enter your email",
+  "pleaseEnterPassword": "Please enter your password",
+  "pleaseEnterFullName": "Please enter your full name",
+  "pleaseEnterPhoneNumber": "Please enter your phone number",
+  "age": "Age",
+  "yearsOld": "{age} years old",
+  "@yearsOld": {
+    "placeholders": {
+      "age": { "type": "String" }
+    }
+  },
+  "basicInformation": "Basic Information",
+  "contactInformation": "Contact Information",
+  "noData": "N/A",
+
+  "fillDetailsToGetStarted": "Fill your details to get started",
+  "accountCreatedSuccess": "Account created successfully!",
+  "signedInSuccess": "Signed in successfully",
+  "warning": "Warning",
+  "pleaseSelectWeight": "Please select your weight to continue.",
+  "pleaseSelectHeight": "Please select your height to continue.",
+  "pleaseSelectDateOfBirth": "Please select your date of birth to continue.",
+  "pleaseSelectGender": "Please select your gender to continue.",
+  "pleaseSelectBloodType": "Please select your blood type to continue.",
+  "pleaseSelectImage": "Please select an image to continue.",
+  "userName": "User Name",
+  "enterYourUserName": "enter your user name",
+  "email": "Email",
+  "enterBloodType": "enter your blood type",
+  "enterHeightCm": "enter your height in cm",
+  "enterWeightKg": "enter your weight in kg",
+  "contactName": "Contact Name",
+  "enterContactName": "enter contact name",
+  "contactRelationship": "Contact Relationship",
+  "enterContactRelationship": "enter contact relationship",
+  "contactNumber": "Contact Number",
+  "enterContactNumber": "enter contact number",
+  "setYourBirthday": "Set your Birthday",
+  "selectYourDateOfBirth": "select your date of birth",
+  "asAPatient": "As a Patient",
+  "findDesiredDoctor": "Find your desired doctor",
+  "asADoctor": "As a Doctor",
+  "joinAsHealthcareProvider": "Join as a healthcare provider",
+  "continueBtn": "Continue",
+  "bio": "Bio",
+  "enterYourBio": "enter your bio",
+  "hospitalName": "Hospital Name",
+  "enterHospitalName": "enter your hospital name",
+  "bookDoctorToday": "Book your doctor today",
+  "findYourDesired": "Find Your Desired",
+  "doctorsNearYou": "Doctors near you",
+  "searchForDoctor": "Search for a doctor",
+  "searchForPatient": "Search for a patient",
+
+  "connectedWithDoctorSuccess": "Connected with doctor successfully",
+  "specialty": "Specialty",
+  "aboutDoctor": "About Doctor",
+  "call": "Call",
+
+  "helloCareLink": "Hello! I'm CareLink AI",
+  "personalAssistantDesc": "Your personal medical assistant.\nAsk me anything about health & wellness!",
+  "explainMedications": "💊 Explain my medications",
+  "commonColdSymptoms": "🩺 Common cold symptoms",
+  "understandLabResults": "🧪 Understand lab results",
+  "heartHealthTips": "🫀 Heart health tips",
+  "uploadLabTestImage": "📷 Upload lab test image",
+  "useVoiceToAsk": "🎤 Use voice to ask",
+  "uploadMedicalImage": "Upload Medical Image",
+  "medicalImageTypes": "Lab tests, MRI scans, X-rays, prescriptions",
+  "addMessageOptional": "Add a message (optional)...",
+  "askAboutHealth": "Ask about health & wellness...",
+  "imageAttached": "Image attached",
+  "readyToAnalyze": "Ready to analyze",
+  "voiceError": "Voice error: {error}",
+  "@voiceError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "speechNotAvailablePermission": "Speech recognition not available. Please check microphone permissions.",
+  "voiceInputFailed": "Could not start voice input. Please restart the app and try again.",
+
+  "onboardingNewTitle1": "All Your Medical Data in One Place",
+  "onboardingNewDesc1": "Keep your health info organized — medications, allergies, surgeries, chronic conditions, and lab results, all safely stored.",
+  "onboardingNewTitle2": "Share Your Medical Info Instantly",
+  "onboardingNewDesc2": "Your personal QR Code lets doctors and visitors access your essential health details quickly and securely.",
+  "onboardingNewTitle3": "Ask Anything. Get Instant Answers.",
+  "onboardingNewDesc3": "Get clear explanations about medications, lab tests, symptoms, or chronic conditions from your AI assistant anytime.",
+  "onboardingNewTitle4": "Your Data. Fully Protected.",
+  "onboardingNewDesc4": "Your medical information is securely stored and only you can access and control it.",
+
+  "manageYourOngoingHealthConditions": "Manage your ongoing health conditions",
+
+  "filterBySpecialty": "Filter by Specialty",
+  "allSpecialties": "All Specialties",
+  "clearFilter": "Clear Filter",
+  "apply": "Apply",
+  "noResultsFound": "No doctors found",
+  "tryDifferentSearch": "Try a different search or filter",
+  "nDoctorsFound": "{count} doctors found",
+  "@nDoctorsFound": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noConnectedDoctors": "No connected doctors",
+  "noConnectedDoctorsDesc": "Connect with doctors from the home page and they will appear here.",
+
+  "resetPassword": "Reset Password",
+  "resetPasswordDesc": "Enter your email address and we'll send you a link to reset your password.",
+  "sendResetLink": "Send Reset Link",
+  "resetLinkSent": "Password reset link sent! Check your email.",
+  "resetLinkSentDesc": "We've sent a password reset link to your email. Please check your inbox and follow the instructions.",
+  "pleaseEnterValidEmail": "Please enter a valid email address",
+  "changePassword": "Change Password",
+  "changePasswordDesc": "Reset your account password",
+  "backToLogin": "Back to Login",
+  "checkYourEmail": "Check Your Email",
+  "sending": "Sending...",
+
+  "privacyPolicyTitle": "Privacy Policy",
+  "privacyPolicyLastUpdated": "Last updated: February 2026",
+  "privacyPolicyIntro": "CareLink (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.",
+  "privacyInfoCollectTitle": "Information We Collect",
+  "privacyInfoCollectDesc": "We collect personal information that you voluntarily provide to us when you register for the app, including your name, email address, phone number, date of birth, blood type, weight, height, and medical information such as chronic conditions, surgeries, vaccinations, and medications.",
+  "privacyHowWeUseTitle": "How We Use Your Information",
+  "privacyHowWeUseDesc": "We use the information we collect to provide and maintain the CareLink service, connect you with healthcare professionals, manage your health records, send you appointment reminders and health updates, and improve our application.",
+  "privacyDataSecurityTitle": "Data Security",
+  "privacyDataSecurityDesc": "We implement appropriate technical and organizational security measures to protect your personal and medical information. Your data is encrypted in transit and at rest using industry-standard protocols.",
+  "privacySharingTitle": "Information Sharing",
+  "privacySharingDesc": "We do not sell, trade, or rent your personal information to third parties. Your medical data is only shared with healthcare providers you explicitly connect with through the application.",
+  "privacyRightsTitle": "Your Rights",
+  "privacyRightsDesc": "You have the right to access, update, or delete your personal information at any time through the app settings. You may also request a complete copy of your data or ask us to erase all your information.",
+  "privacyContactTitle": "Contact Us",
+  "privacyContactDesc": "If you have questions about this Privacy Policy, please contact us through the app's support section.",
+
+  "aboutTitle": "About CareLink",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "aboutDesc": "CareLink is a comprehensive healthcare management platform that connects patients with doctors, manages medical records, and provides AI-powered health assistance.",
+  "aboutMission": "Our Mission",
+  "aboutMissionDesc": "To make healthcare accessible, organized, and seamless for everyone. We believe that technology can bridge the gap between patients and healthcare providers.",
+  "aboutFeatures": "Key Features",
+  "aboutFeature1": "Connect with qualified doctors",
+  "aboutFeature2": "Manage your complete medical history",
+  "aboutFeature3": "AI-powered health chatbot",
+  "aboutFeature4": "Track chronic conditions & medications",
+  "aboutFeature5": "Secure and private health data",
+  "aboutTeam": "Development Team",
+  "aboutTeamDesc": "Built with ❤️ as a Graduation Project 2025",
+  "aboutPoweredBy": "Powered by Flutter & Supabase",
+
+  "rateUsTitle": "Enjoying CareLink?",
+  "rateUsDesc": "Your feedback helps us improve! Please rate your experience with our app.",
+  "rateUsSubmit": "Submit Rating",
+  "rateUsThankYou": "Thank you for your feedback!",
+  "rateUsThankYouDesc": "We appreciate your rating. Your feedback helps us make CareLink better for everyone.",
+  "rateUsTapStar": "Tap a star to rate",
+
+  "contactUsDesc": "Need help? Chat with our AI assistant for instant support.",
+  "openChatbot": "Open AI Assistant",
+
+  "imageUnavailable": "Image unavailable",
+  "analyzeThisImage": "Analyze this image",
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "arabicShort": "عربي",
+  "englishShort": "EN",
+
+  "onboardingStepsCount": "4"
+}
+
