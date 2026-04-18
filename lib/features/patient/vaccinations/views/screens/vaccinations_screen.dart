@@ -1,3 +1,4 @@
+import 'package:care_link/core/helper/app_date_picker.dart';
 import 'package:care_link/core/cache/cache_helper.dart';
 import 'package:care_link/core/locale/app_localizations_ext.dart';
 import 'package:care_link/core/utilies/colors/app_colors.dart';
@@ -874,11 +875,9 @@ class _AddVaccinationContentState extends State<AddVaccinationContent> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+    final DateTime? picked = await pickDateWithDefaultToday(
+      context,
+      selected: _vaccinationDate,
     );
     if (picked != null) {
       setState(() {

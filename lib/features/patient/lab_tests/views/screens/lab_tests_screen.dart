@@ -1,3 +1,4 @@
+import 'package:care_link/core/helper/app_date_picker.dart';
 import 'package:care_link/core/cache/cache_helper.dart';
 import 'package:care_link/core/locale/app_localizations_ext.dart';
 import 'package:care_link/core/network/supabase/storage/upload_file.dart';
@@ -847,11 +848,9 @@ class _AddLabTestContentState extends State<AddLabTestContent> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+    final DateTime? picked = await pickDateWithDefaultToday(
+      context,
+      selected: _testDate,
     );
     if (picked != null) {
       setState(() {

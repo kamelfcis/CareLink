@@ -27,6 +27,11 @@ class PickDateOfBirth extends StatelessWidget {
           prefixIcon: CupertinoIcons.calendar,
           keyboardType: TextInputType.datetime,
           onTap: () {
+            final now = DateTime.now();
+            final today = DateTime(now.year, now.month, now.day);
+            final minBirth = DateTime(1900, 1, 1);
+            var initial = DateTime(now.year - 20, 6, 15);
+            if (initial.isAfter(today)) initial = today;
             BottomPicker.date(
               headerBuilder: (context) {
                 return Row(
@@ -39,21 +44,16 @@ class PickDateOfBirth extends StatelessWidget {
                 );
               },
               dateOrder: DatePickerDateOrder.dmy,
-              initialDateTime: DateTime(1996, 10, 22),
-              maxDateTime: DateTime(1998),
-              minDateTime: DateTime(1980),
-              onChange: (index) {
-                print(index);
-              },
+              initialDateTime: initial.isBefore(minBirth) ? minBirth : initial,
+              maxDateTime: today,
+              minDateTime: minBirth,
+              onChange: (index) {},
               onSubmit: (index) {
                 cubit.selectDate(DateFormat()
                     .add_yMMMEd()
                     .format(DateTime.parse(index.toString())));
-                print(index);
               },
-              onDismiss: (p0) {
-                print(p0);
-              },
+              onDismiss: (p0) {},
               bottomPickerTheme: BottomPickerTheme.plumPlate,
               buttonSingleColor: AppColors.kPrimaryColor,
             ).show(context);

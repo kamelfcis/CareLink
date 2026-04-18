@@ -1,3 +1,4 @@
+import 'package:care_link/core/helper/app_date_picker.dart';
 import 'package:care_link/core/cache/cache_helper.dart';
 import 'package:care_link/core/locale/app_localizations_ext.dart';
 import 'package:care_link/core/utilies/colors/app_colors.dart';
@@ -922,11 +923,18 @@ class _AddMedicationContentState extends State<AddMedicationContent> {
   }
 
   Future<void> _selectDate(BuildContext context, bool isStart) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+    const rangeStart = DateTime(2000);
+    final firstDate = isStart
+        ? rangeStart
+        : (_startDate != null
+            ? (dateOnly(_startDate!).isBefore(rangeStart)
+                ? rangeStart
+                : dateOnly(_startDate!))
+            : rangeStart);
+    final DateTime? picked = await pickDateWithDefaultToday(
+      context,
+      selected: isStart ? _startDate : _endDate,
+      firstDate: firstDate,
     );
     if (picked != null) {
       setState(() {
