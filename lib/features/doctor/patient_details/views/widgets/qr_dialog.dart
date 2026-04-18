@@ -1,4 +1,3 @@
-import 'package:care_link/core/constants/app_constants.dart';
 import 'package:care_link/core/helper/launch_link.dart';
 import 'package:care_link/core/utilies/colors/app_colors.dart';
 import 'package:care_link/core/utilies/extensions/app_extensions.dart';
@@ -10,7 +9,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 class QRDialog extends StatelessWidget {
   const QRDialog({
     super.key,
+    required this.qrData,
   });
+
+  final String qrData;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +32,13 @@ class QRDialog extends StatelessWidget {
           children: [
             Text("QR Code", style: AppTextStyles.title20BlackBold),
             SizedBox(height: SizeConfig.height * 0.005),
-            Text("Scan this QR code to visit the site."),
+            Text("Scan to open this patient's CareLink profile."),
             SizedBox(height: SizeConfig.height * 0.03),
             SizedBox(
               width: SizeConfig.width * 0.4,
               height: SizeConfig.width * 0.4,
               child: QrImageView(
-                data: AppConstants.qrCodeUrl,
+                data: qrData,
                 version: QrVersions.auto,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
@@ -48,7 +50,7 @@ class QRDialog extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () {
                   context.popScreen();
-                  launchUrlSocialMedia(url: AppConstants.qrCodeUrl);
+                  launchUrlSocialMedia(url: qrData);
                 },
                 icon:
                     const Icon(Icons.qr_code_scanner, color: Colors.white),

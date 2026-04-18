@@ -10,6 +10,7 @@ import 'package:care_link/features/chatbot/view_models/cubit/chatbot_state.dart'
 import 'package:care_link/features/chatbot/views/widgets/chat_bubble.dart';
 import 'package:care_link/features/chatbot/views/widgets/chat_input_bar.dart';
 import 'package:care_link/features/chatbot/views/widgets/typing_indicator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,6 +42,16 @@ class _ChatBotScreenState extends State<ChatBotScreen>
     _textController.dispose();
     _fadeController.dispose();
     super.dispose();
+  }
+
+  String _errorLabel(BuildContext context, String errorKey) {
+    final tr = context.tr;
+    switch (errorKey) {
+      case 'failedToAnalyzeImage':
+        return tr.failedToAnalyzeImage;
+      default:
+        return tr.somethingWentWrong;
+    }
   }
 
   void _scrollToBottom() {
@@ -203,6 +214,19 @@ class _ChatBotScreenState extends State<ChatBotScreen>
       child: BlocConsumer<ChatBotCubit, ChatBotState>(
         listener: (context, state) {
           _scrollToBottom();
+          if (state is ChatBotError) {
+            final base = _errorLabel(context, state.error);
+            final detail = state.technicalDetail;
+            final text = (kDebugMode && detail != null && detail.isNotEmpty)
+                ? '$base\n$detail'
+                : base;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(text),
+                duration: const Duration(seconds: 6),
+              ),
+            );
+          }
         },
         builder: (context, state) {
           if (state.messages.isEmpty) {

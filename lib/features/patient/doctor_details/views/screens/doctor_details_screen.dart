@@ -83,6 +83,9 @@ class _DoctorHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = doctor.doctor?.image.trim();
+    final hasPhoto = imageUrl != null && imageUrl.isNotEmpty;
+
     return Container(
       padding: EdgeInsets.all(SizeConfig.width * 0.04),
       decoration: BoxDecoration(
@@ -100,7 +103,16 @@ class _DoctorHeader extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: SizeConfig.width * 0.1,
-              backgroundImage: NetworkImage(doctor.doctor!.image),
+              backgroundColor: AppColors.kPrimaryLight,
+              backgroundImage:
+                  hasPhoto ? NetworkImage(imageUrl) : null,
+              child: hasPhoto
+                  ? null
+                  : Icon(
+                      Icons.person_rounded,
+                      size: SizeConfig.width * 0.12,
+                      color: AppColors.kPrimaryDark,
+                    ),
             ),
           ),
           SizedBox(width: SizeConfig.width * 0.03),
@@ -109,7 +121,7 @@ class _DoctorHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  doctor.doctor!.name,
+                  doctor.doctor?.name ?? 'Doctor',
                   style: AppTextStyles.title18WhiteW500,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -171,13 +183,13 @@ class _DoctorDetailsCard extends StatelessWidget {
         children: [
           _InfoRow(
             title: context.tr.email,
-            value: doctor.doctor!.email,
+            value: doctor.doctor?.email ?? '—',
             icon: Icons.email_outlined,
           ),
           _Divider(),
           _InfoRow(
             title: context.tr.phone,
-            value: doctor.doctor!.phone,
+            value: doctor.doctor?.phone ?? '—',
             icon: Icons.phone_outlined,
           ),
           _Divider(),
@@ -261,21 +273,28 @@ class _ContactSection extends StatelessWidget {
   const _ContactSection({required this.doctor});
   @override
   Widget build(BuildContext context) {
+    final phone = doctor.doctor?.phone.trim();
+    final canDial = phone != null && phone.isNotEmpty;
+
     return Row(
       children: [
         _ContactButton(
           icon: Icons.phone,
           label: context.tr.call,
-          onTap: () {
-            launchUrlSocialMedia(url: "tel:${doctor.doctor!.phone}");
-          },
+          onTap: canDial
+              ? () {
+                  launchUrlSocialMedia(url: "tel:$phone");
+                }
+              : null,
         ),
         _ContactButton(
           icon: FontAwesomeIcons.whatsapp,
           label: context.tr.whatsApp,
-          onTap: () {
-            launchUrlSocialMedia(url: "https://wa.me/${doctor.doctor!.phone}");
-          },
+          onTap: canDial
+              ? () {
+                  launchUrlSocialMedia(url: "https://wa.me/$phone");
+                }
+              : null,
         ),
       ],
     );

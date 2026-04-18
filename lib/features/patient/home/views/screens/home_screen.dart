@@ -13,6 +13,7 @@ import 'package:care_link/features/patient/home/views/widgets/custom_loading_ind
 import 'package:care_link/features/patient/home/views/widgets/doctor_card.dart';
 import 'package:care_link/features/patient/home/views/widgets/animated_medical_background.dart';
 import 'package:care_link/features/patient/home/views/widgets/gradient_header.dart';
+import 'package:care_link/features/patient/shared/widgets/patient_identity_qr.dart';
 import 'package:care_link/features/patient/settings/views/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +40,8 @@ class PatientHomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userModel = getIt<CacheHelper>().getPatientModel()!.patient;
+    final patientModel = getIt<CacheHelper>().getPatientModel()!;
+    final userModel = patientModel.patient;
     final tr = context.tr;
     return GradientHeader(
       child: Padding(
@@ -102,6 +104,12 @@ class PatientHomeScreenBody extends StatelessWidget {
             Text(
               tr.doctorsNearYou,
               style: AppTextStyles.title22WhiteColorBold,
+            ),
+            SizedBox(height: SizeConfig.height * 0.014),
+            PatientIdentityQrCard(
+              patientId: patientModel.id,
+              patientName: userModel.name,
+              compact: true,
             ),
             SizedBox(height: SizeConfig.height * 0.012),
             Row(

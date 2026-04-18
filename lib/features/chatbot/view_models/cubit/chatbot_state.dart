@@ -19,7 +19,9 @@ class ChatBotSuccess extends ChatBotState {
 
 class ChatBotError extends ChatBotState {
   final String error;
-  const ChatBotError(super.messages, this.error);
+  /// Raw exception text (shown in debug / optional detail); do not log in production analytics.
+  final String? technicalDetail;
+  const ChatBotError(super.messages, this.error, [this.technicalDetail]);
 }
 
 

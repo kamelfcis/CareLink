@@ -1,5 +1,5 @@
-import 'package:care_link/core/constants/app_constants.dart';
 import 'package:care_link/core/helper/launch_link.dart';
+import 'package:care_link/core/helper/patient_qr_payload.dart';
 import 'package:care_link/core/locale/app_localizations_ext.dart';
 import 'package:care_link/core/utilies/sizes/sized_config.dart';
 import 'package:care_link/features/auth/sign_up_as_patient/models/patient_model.dart';
@@ -45,7 +45,7 @@ class ContactButtonsRow extends StatelessWidget {
             icon: Icons.qr_code,
             label: context.tr.qrCode,
             onTap: () {
-              _showQRDialog(context, AppConstants.qrCodeUrl);
+              _showQRDialog(context, buildPatientQrPayload(patient.id));
             },
           ),
         ],
@@ -53,11 +53,11 @@ class ContactButtonsRow extends StatelessWidget {
     );
   }
 
-  void _showQRDialog(BuildContext context, String url) {
+  void _showQRDialog(BuildContext context, String qrData) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return QRDialog();
+        return QRDialog(qrData: qrData);
       },
     );
   }

@@ -34,8 +34,13 @@ Guidelines:
       throw Exception('Missing GEMINI_API_KEY in .env');
     }
 
+    final modelId = dotenv.env['GEMINI_MODEL']?.trim();
+    final resolvedModel = (modelId != null && modelId.isNotEmpty)
+        ? modelId
+        : 'gemini-2.5-flash';
+
     _model = GenerativeModel(
-      model: 'gemini-2.0-flash',
+      model: resolvedModel,
       apiKey: apiKey,
       systemInstruction: Content.system(_systemPrompt),
       generationConfig: GenerationConfig(
@@ -54,7 +59,16 @@ Guidelines:
       final response = await _chatSession!.sendMessage(
         Content.text(message),
       );
-      return response.text ?? 'Sorry, I could not generate a response.';
+      try {
+        final text = response.text;
+        if (text == null || text.trim().isEmpty) {
+          return 'Sorry, I could not generate a response.';
+        }
+        return text;
+      } on GenerativeAIException catch (e) {
+        // Blocked by safety filters, recitation, etc.
+        return e.message;
+      }
     } catch (e) {
       throw Exception('Failed to get response: $e');
     }
@@ -77,7 +91,15 @@ Guidelines:
       ]);
 
       final response = await _chatSession!.sendMessage(content);
-      return response.text ?? 'Sorry, I could not analyze the image.';
+      try {
+        final text = response.text;
+        if (text == null || text.trim().isEmpty) {
+          return 'Sorry, I could not analyze the image.';
+        }
+        return text;
+      } on GenerativeAIException catch (e) {
+        return e.message;
+      }
     } catch (e) {
       throw Exception('Failed to analyze image: $e');
     }

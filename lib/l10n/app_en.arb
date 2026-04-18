@@ -325,6 +325,11 @@
   "mobile": "Mobile",
   "whatsApp": "WhatsApp",
   "qrCode": "QR Code",
+  "patientQrCardTitle": "Your patient ID",
+  "patientQrCardSubtitle": "Share with your doctor for quick, secure access.",
+  "patientQrExpandHint": "Tap to enlarge",
+  "patientQrShare": "Share",
+  "patientQrModalDescription": "Your doctor can scan this code to identify your CareLink profile.",
   "connect": "Connect",
   "weightKg": "{weight} kg",
   "@weightKg": {

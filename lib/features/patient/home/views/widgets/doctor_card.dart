@@ -56,7 +56,7 @@ class DoctorCard extends StatelessWidget {
                         SizedBox(width: SizeConfig.width * 0.22),
                         Expanded(
                           child: Text(
-                            doctor.doctor!.name,
+                            doctor.doctor?.name ?? 'Doctor',
                             style: AppTextStyles.title18WhiteBold,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -102,7 +102,7 @@ class DoctorCard extends StatelessWidget {
             ],
           ),
         ),
-        DoctorImage(doctorImage: doctor.doctor!.image),
+        DoctorImage(doctorImage: doctor.doctor?.image),
       ],
     );
   }

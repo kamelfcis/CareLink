@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:care_link/core/di/dependancy_injection.dart';
@@ -23,10 +24,12 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       final response = await _geminiService.sendMessage(text.trim());
       final aiMessage = ChatMessage(text: response, isUser: false);
       emit(ChatBotSuccess([...updatedMessages, aiMessage]));
-    } catch (e) {
+    } catch (e, st) {
+      log('ChatBot sendMessage failed', error: e, stackTrace: st);
       emit(ChatBotError(
         updatedMessages,
         'somethingWentWrong',
+        e.toString(),
       ));
     }
   }
@@ -53,10 +56,12 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
       final aiMessage = ChatMessage(text: response, isUser: false);
       emit(ChatBotSuccess([...updatedMessages, aiMessage]));
-    } catch (e) {
+    } catch (e, st) {
+      log('ChatBot sendMessageWithImage failed', error: e, stackTrace: st);
       emit(ChatBotError(
         updatedMessages,
         'failedToAnalyzeImage',
+        e.toString(),
       ));
     }
   }

@@ -800,6 +800,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrCode => 'QR Code';
 
   @override
+  String get patientQrCardTitle => 'Your patient ID';
+
+  @override
+  String get patientQrCardSubtitle =>
+      'Share with your doctor for quick, secure access.';
+
+  @override
+  String get patientQrExpandHint => 'Tap to enlarge';
+
+  @override
+  String get patientQrShare => 'Share';
+
+  @override
+  String get patientQrModalDescription =>
+      'Your doctor can scan this code to identify your CareLink profile.';
+
+  @override
   String get connect => 'Connect';
 
   @override

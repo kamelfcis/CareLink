@@ -790,6 +790,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qrCode => 'رمز QR';
 
   @override
+  String get patientQrCardTitle => 'معرفك كمريض';
+
+  @override
+  String get patientQrCardSubtitle => 'شاركه مع طبيبك للوصول السريع والآمن.';
+
+  @override
+  String get patientQrExpandHint => 'اضغط للتكبير';
+
+  @override
+  String get patientQrShare => 'مشاركة';
+
+  @override
+  String get patientQrModalDescription =>
+      'يمكن لطبيبك مسح هذا الرمز للتعرّف على ملفك في CareLink.';
+
+  @override
   String get connect => 'تواصل';
 
   @override

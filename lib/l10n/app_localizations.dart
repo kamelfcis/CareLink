@@ -1592,6 +1592,36 @@ abstract class AppLocalizations {
   /// **'QR Code'**
   String get qrCode;
 
+  /// No description provided for @patientQrCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your patient ID'**
+  String get patientQrCardTitle;
+
+  /// No description provided for @patientQrCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with your doctor for quick, secure access.'**
+  String get patientQrCardSubtitle;
+
+  /// No description provided for @patientQrExpandHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to enlarge'**
+  String get patientQrExpandHint;
+
+  /// No description provided for @patientQrShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get patientQrShare;
+
+  /// No description provided for @patientQrModalDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your doctor can scan this code to identify your CareLink profile.'**
+  String get patientQrModalDescription;
+
   /// No description provided for @connect.
   ///
   /// In en, this message translates to:

@@ -14,13 +14,37 @@ class DoctorModel {
     required this.specialty,
     this.doctor,
   });
+  static UserModel? _parseNestedUser(dynamic raw) {
+    if (raw == null) return null;
+    if (raw is Map<String, dynamic>) {
+      return UserModel.fromJson(raw);
+    }
+    if (raw is List && raw.isNotEmpty && raw.first is Map) {
+      return UserModel.fromJson(Map<String, dynamic>.from(raw.first as Map));
+    }
+    return null;
+  }
+
+  static Map<String, dynamic>? _parseSpecialtyJson(dynamic raw) {
+    if (raw == null) return null;
+    if (raw is Map<String, dynamic>) return raw;
+    if (raw is List && raw.isNotEmpty && raw.first is Map) {
+      return Map<String, dynamic>.from(raw.first as Map);
+    }
+    return null;
+  }
+
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
+    final specialtyJson = _parseSpecialtyJson(json['doctor_specialties']);
+    if (specialtyJson == null) {
+      throw FormatException('doctor_specialties missing or invalid');
+    }
     return DoctorModel(
       id: json['id'],
       bio: json['bio'],
       hospital: json['hospital'],
-      specialty: DoctorSpecialtyModel.fromJson(json['doctor_specialties']),
-      doctor: json['users'] == null ? null : UserModel.fromJson(json['users']),
+      specialty: DoctorSpecialtyModel.fromJson(specialtyJson),
+      doctor: _parseNestedUser(json['users']),
     );
   }
   toJson() {

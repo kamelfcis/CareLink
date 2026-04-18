@@ -8,8 +8,8 @@ import 'package:care_link/core/utilies/sizes/sized_config.dart';
 import 'package:care_link/core/utilies/styles/app_text_styles.dart';
 import 'package:care_link/features/auth/sign_up_as_patient/models/patient_model.dart';
 import 'package:care_link/features/patient/home/views/widgets/gradient_header.dart';
+import 'package:care_link/features/patient/shared/widgets/patient_identity_qr.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PatientProfileScreen extends StatelessWidget {
   final PatientModel patient;
@@ -28,6 +28,12 @@ class PatientProfileScreen extends StatelessWidget {
           padding: EdgeInsets.all(SizeConfig.width * 0.04),
           children: [
             _Header(patient: patient),
+            SizedBox(height: SizeConfig.height * 0.016),
+            PatientIdentityQrCard(
+              patientId: patient.id,
+              patientName: patient.patient?.name ?? '',
+              compact: false,
+            ),
             SizedBox(height: SizeConfig.height * 0.02),
             _BasicInfoCard(patient: patient),
             SizedBox(height: SizeConfig.height * 0.02),
