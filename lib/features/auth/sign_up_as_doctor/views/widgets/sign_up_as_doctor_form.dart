@@ -1,5 +1,6 @@
 import 'package:care_link/core/components/custom_circular_progress_indecator.dart';
 import 'package:care_link/core/components/custom_drop_down_button_form_field.dart';
+import 'package:care_link/core/components/location_dropdown_widget.dart';
 import 'package:care_link/core/locale/app_localizations_ext.dart';
 import 'package:care_link/features/auth/sign_up_as_doctor/view_models/cubit/sign_up_as_doctor_cubit.dart';
 import 'package:care_link/features/auth/sign_up_as_doctor/views/widgets/custom_failure_message.dart';
@@ -88,6 +89,13 @@ class SignUpAsDoctorForm extends StatelessWidget {
             prefixIcon: Icons.local_hospital,
             keyboardType: TextInputType.text,
             controller: cubit.hospitalController,
+          ),
+          SizedBox(height: SizeConfig.height * 0.01),
+          LocationDropdownWidget(
+            onLocationSelected: (governorate, center) {
+              cubit.selectedGovernorate = governorate;
+              cubit.selectedCenter = center;
+            },
           ),
           SizedBox(height: SizeConfig.height * 0.01),
           // Password

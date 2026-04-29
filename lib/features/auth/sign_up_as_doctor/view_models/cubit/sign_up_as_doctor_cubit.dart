@@ -29,6 +29,8 @@ class SignUpAsDoctorCubit extends Cubit<SignUpAsDoctorState> {
   final formKey = GlobalKey<FormState>();
   File? image;
   String? sselectedSpecialtyId;
+  String? selectedGovernorate;
+  String? selectedCenter;
   //// Methods
   /// get doctor specialization list
   List<DoctorSpecialtyModel> doctorSpecialties = [];
@@ -57,6 +59,10 @@ class SignUpAsDoctorCubit extends Cubit<SignUpAsDoctorState> {
         emit(SelectImage());
         return;
       }
+      if (selectedGovernorate == null || selectedCenter == null) {
+        emit(SelectLocation());
+        return;
+      }
       try {
         emit(SignUpLoading());
         FocusScope.of(navigatorKey.currentContext!).unfocus();
@@ -81,6 +87,8 @@ class SignUpAsDoctorCubit extends Cubit<SignUpAsDoctorState> {
             "specialty_id": sselectedSpecialtyId,
             "hospital": hospitalController.text,
             "bio": bioController.text,
+            "governorate": selectedGovernorate,
+            "center": selectedCenter,
           },
         );
         emit(SignUpSuccess());

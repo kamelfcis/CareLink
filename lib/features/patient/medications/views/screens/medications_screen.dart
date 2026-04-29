@@ -923,7 +923,7 @@ class _AddMedicationContentState extends State<AddMedicationContent> {
   }
 
   Future<void> _selectDate(BuildContext context, bool isStart) async {
-    const rangeStart = DateTime(2000);
+    final rangeStart = DateTime(2000);
     final firstDate = isStart
         ? rangeStart
         : (_startDate != null

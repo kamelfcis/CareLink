@@ -1,6 +1,7 @@
 import 'package:care_link/core/app_route/route_names.dart';
 import 'package:care_link/core/cache/cache_helper.dart';
 import 'package:care_link/core/di/dependancy_injection.dart';
+import 'package:care_link/core/helper/launch_link.dart';
 import 'package:care_link/core/locale/app_localizations_ext.dart';
 import 'package:care_link/core/utilies/colors/app_colors.dart';
 import 'package:care_link/core/utilies/extensions/app_extensions.dart';
@@ -147,6 +148,23 @@ class _EmergencyContactCard extends StatelessWidget {
           _InfoRow(context.tr.relationship, contact.relationship),
           _Divider(),
           _InfoRow(context.tr.phone, contact.phone),
+          SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: contact.phone.trim().isEmpty
+                  ? null
+                  : () {
+                      launchUrlSocialMedia(url: 'tel:${contact.phone}');
+                    },
+              icon: const Icon(Icons.call),
+              label: Text(context.tr.call),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.kPrimaryColor,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );

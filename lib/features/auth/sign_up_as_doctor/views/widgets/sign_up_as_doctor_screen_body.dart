@@ -39,6 +39,11 @@ class SignUpAsDoctorScreenBody extends StatelessWidget {
             title: tr.warning,
             message: tr.pleaseSelectImage,
           );
+        } else if (state is SelectLocation) {
+          CustomQuickAlert.warning(
+            title: tr.warning,
+            message: "Please select governorate and district.",
+          );
         }
       },
       child: GradientHeader(

@@ -45,3 +45,4 @@ final class GetDoctorSpecialtiesFailure extends SignUpAsDoctorState {
 }
 // for select specialty
 final class SelectSpecialty extends SignUpAsDoctorState {}
+final class SelectLocation extends SignUpAsDoctorState {}
