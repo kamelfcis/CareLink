@@ -10,6 +10,11 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final patientUser = patient.patient;
+    final imageUrl = patientUser?.image.trim();
+    final hasImage = imageUrl != null && imageUrl.isNotEmpty;
+    final patientName = patientUser?.name;
+    final patientEmail = patientUser?.email;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: SizeConfig.width * 0.04,
@@ -23,7 +28,10 @@ class Header extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: SizeConfig.width * 0.1,
-            backgroundImage: NetworkImage(patient.patient!.image),
+            backgroundImage: hasImage ? NetworkImage(imageUrl) : null,
+            child: hasImage
+                ? null
+                : const Icon(Icons.person_rounded, color: Colors.grey),
           ),
           SizedBox(width: SizeConfig.width * 0.03),
           Expanded(
@@ -31,14 +39,18 @@ class Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  patient.patient!.name,
+                  patientName != null && patientName.isNotEmpty
+                      ? patientName
+                      : 'Unknown patient',
                   style: AppTextStyles.title18WhiteW500,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
                 SizedBox(height: 4),
                 Text(
-                  patient.patient!.email,
+                  patientEmail != null && patientEmail.isNotEmpty
+                      ? patientEmail
+                      : 'No email',
                   style: AppTextStyles.title12White70,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

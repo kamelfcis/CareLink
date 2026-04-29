@@ -34,12 +34,36 @@ class DoctorProfileScreenBody extends StatelessWidget {
   const DoctorProfileScreenBody({
     super.key,
     required this.doctor,
+    this.enableConnect = true,
   });
 
   final DoctorModel doctor;
+  final bool enableConnect;
 
   @override
   Widget build(BuildContext context) {
+    final pageContent = GradientHeader(
+      child: ListView(
+        padding: EdgeInsets.all(SizeConfig.width * 0.04),
+        children: [
+          _DoctorHeader(doctor: doctor),
+          SizedBox(height: SizeConfig.height * 0.02),
+          _DoctorDetailsCard(doctor: doctor),
+          SizedBox(height: SizeConfig.height * 0.02),
+          _ContactSection(
+            doctor: doctor,
+          ),
+          if (enableConnect) ...[
+            SizedBox(height: SizeConfig.height * 0.025),
+            ConnectButton(doctorId: doctor.id),
+          ],
+        ],
+      ),
+    );
+    if (!enableConnect) {
+      return pageContent;
+    }
+
     return BlocListener<ConnectWithDoctorCubit, ConnectWithDoctorState>(
       listener: (context, state) {
         if (state is ConnectWithDoctorSuccess) {
@@ -56,22 +80,7 @@ class DoctorProfileScreenBody extends StatelessWidget {
           );
         }
       },
-      child: GradientHeader(
-        child: ListView(
-          padding: EdgeInsets.all(SizeConfig.width * 0.04),
-          children: [
-            _DoctorHeader(doctor: doctor),
-            SizedBox(height: SizeConfig.height * 0.02),
-            _DoctorDetailsCard(doctor: doctor),
-            SizedBox(height: SizeConfig.height * 0.02),
-            _ContactSection(
-              doctor: doctor,
-            ),
-            SizedBox(height: SizeConfig.height * 0.025),
-            ConnectButton(doctorId: doctor.id),
-          ],
-        ),
-      ),
+      child: pageContent,
     );
   }
 }

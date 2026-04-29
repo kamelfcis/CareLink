@@ -47,7 +47,7 @@ class DoctorsCubit extends Cubit<DoctorsState> {
           .toList();
       filteredDoctors = List.from(doctors);
       emit(GetDoctorsSuccess());
-    } on Exception catch (e) {
+    } catch (e) {
       emit(GetDoctorsFailure(errorMessage: e.toString()));
     }
   }

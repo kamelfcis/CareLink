@@ -21,17 +21,30 @@ class PatientModel {
     required this.bloodType,
   });
 
+  static UserModel? _parseNestedUser(dynamic raw) {
+    if (raw == null) return null;
+    if (raw is Map<String, dynamic>) return UserModel.fromJson(raw);
+    if (raw is List && raw.isNotEmpty && raw.first is Map) {
+      return UserModel.fromJson(Map<String, dynamic>.from(raw.first as Map));
+    }
+    return null;
+  }
+
+  static EmergencyContactModel _parseEmergency(dynamic raw) {
+    if (raw is Map<String, dynamic>) {
+      return EmergencyContactModel.fromJson(raw);
+    }
+    return EmergencyContactModel(name: '', phone: '', relationship: '');
+  }
+
   factory PatientModel.fromJson(Map<String, dynamic> json) {
     return PatientModel(
       id: json['id'] ?? '', // لو null نحط ''
       gender: json['gender'] ?? 'unknown',
       weight: double.tryParse(json['weight_kg']?.toString() ?? '0.0') ?? 0.0,
       height: double.tryParse(json['height_cm']?.toString() ?? '0.0') ?? 0.0,
-      emergencyContact: json['emergency_contact'] != null
-          ? EmergencyContactModel.fromJson(json['emergency_contact'])
-          : EmergencyContactModel(
-              name: '', phone: '', relationship: ""), // قيم افتراضية
-      patient: json['users'] != null ? UserModel.fromJson(json['users']) : null,
+      emergencyContact: _parseEmergency(json['emergency_contact']),
+      patient: _parseNestedUser(json['users']),
       dateOfBirth: json['date_of_birth'] ?? '', // أهم سطر
       bloodType: json['blood_type'] ?? 'Unknown',
     );

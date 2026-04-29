@@ -164,10 +164,17 @@ class SurgeriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as String?;
-    return SurgeriesView(
-      patientId: args!,
-    );
+    final args = ModalRoute.of(context)?.settings.arguments as String?;
+    final cachedPatientId = getIt<CacheHelper>().getPatientModel()?.id;
+    final patientId = args ?? cachedPatientId;
+    if (patientId == null || patientId.isEmpty) {
+      return Scaffold(
+        body: Center(
+          child: Text(context.tr.somethingWentWrong),
+        ),
+      );
+    }
+    return SurgeriesView(patientId: patientId);
   }
 }
 
@@ -193,6 +200,13 @@ class _SurgeriesViewState extends State<SurgeriesView> {
   void dispose() {
     _cubit.close();
     super.dispose();
+  }
+
+  bool _canAddSurgeryForThisPatient() {
+    final cache = getIt<CacheHelper>();
+    if (cache.getDoctorModel() != null) return true;
+    final selfId = cache.getPatientModel()?.id;
+    return selfId != null && selfId == widget.patientId;
   }
 
   @override
@@ -322,44 +336,45 @@ class _SurgeriesViewState extends State<SurgeriesView> {
           ),
         ),
       ),
-      // Floating Action Button for adding
-      floatingActionButton: getIt<CacheHelper>().getDoctorModel() != null
+      // Doctors can add for any patient they open; patients only for their own record
+      floatingActionButton: _canAddSurgeryForThisPatient()
           ? BlocBuilder(
-        bloc: _cubit,
-        builder: (context, state) {
-          final isLoading = state is AddSurgeryLoading;
-          return FloatingActionButton.extended(
-            onPressed: isLoading
-                ? null
-                : () => _showAddSurgeryBottomSheet(context, _cubit),
-            backgroundColor: AppColors.kPrimaryColor,
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            icon: isLoading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
-                    ),
-                  )
-                : const Icon(
-                    Icons.add,
-                    color: Colors.white,
+              bloc: _cubit,
+              builder: (context, state) {
+                final isLoading = state is AddSurgeryLoading;
+                return FloatingActionButton.extended(
+                  onPressed: isLoading
+                      ? null
+                      : () => _showAddSurgeryBottomSheet(context, _cubit),
+                  backgroundColor: AppColors.kPrimaryColor,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-            label: Text(
-              isLoading ? context.tr.adding : context.tr.addSurgery,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        },
-      ):null,
+                  icon: isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                  label: Text(
+                    isLoading ? context.tr.adding : context.tr.addSurgery,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                );
+              },
+            )
+          : null,
     );
   }
 

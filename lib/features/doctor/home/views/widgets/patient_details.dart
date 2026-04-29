@@ -14,6 +14,7 @@ class PatientDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final patientName = patient.patient?.name;
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -24,7 +25,9 @@ class PatientDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              patient.patient!.name,
+              patientName != null && patientName.isNotEmpty
+                  ? patientName
+                  : 'Unknown patient',
               style: AppTextStyles.title18BlackW600,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

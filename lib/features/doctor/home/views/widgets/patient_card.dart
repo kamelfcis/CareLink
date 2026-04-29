@@ -37,7 +37,7 @@ class PatientCard extends StatelessWidget {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            PatientImage(patientImage: patient.patient!.image),
+            PatientImage(patientImage: patient.patient?.image),
             PatientDetails(patient: patient),
           ],
         ),

@@ -8,6 +8,7 @@ import 'package:care_link/core/utilies/extensions/app_extensions.dart';
 import 'package:care_link/core/utilies/sizes/sized_config.dart';
 import 'package:care_link/core/utilies/styles/app_text_styles.dart';
 import 'package:care_link/features/auth/forgot_password/views/screens/forgot_password_screen.dart';
+import 'package:care_link/features/patient/doctor_details/views/screens/doctor_details_screen.dart';
 import 'package:care_link/features/patient/my_doctors/views/screens/my_doctors_screen.dart';
 import 'package:care_link/features/patient/profile/views/screens/profile_screen.dart';
 import 'package:care_link/features/patient/settings/views/screens/about_screen.dart';
@@ -24,6 +25,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
+    final isDoctor = getIt<CacheHelper>().getDoctorModel() != null;
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -50,28 +52,53 @@ class SettingsScreen extends StatelessWidget {
                 icon: Icons.person_outline,
                 title: tr.profile,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return PatientProfileScreen(
-                        patient: getIt<CacheHelper>().getPatientModel()!,
-                      );
-                    },
-                  ));
-                },
-              ),
-              _SettingsTile(
-                icon: Icons.favorite_border,
-                title: tr.myDoctors,
-                subtitle: tr.doctorsConnectedWith,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyDoctorsScreen(),
-                    ),
+                  final patientModel = getIt<CacheHelper>().getPatientModel();
+                  if (patientModel != null) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return PatientProfileScreen(
+                          patient: patientModel,
+                        );
+                      },
+                    ));
+                    return;
+                  }
+                  final doctorModel = getIt<CacheHelper>().getDoctorModel();
+                  if (doctorModel != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => Scaffold(
+                          resizeToAvoidBottomInset: false,
+                          body: DoctorProfileScreenBody(
+                            doctor: doctorModel,
+                            enableConnect: false,
+                          ),
+                        ),
+                      ),
+                    );
+                    return;
+                  }
+                  CustomQuickAlert.error(
+                    title: tr.error,
+                    message: tr.somethingWentWrong,
                   );
                 },
               ),
+              if (!isDoctor)
+                _SettingsTile(
+                  icon: Icons.favorite_border,
+                  title: tr.myDoctors,
+                  subtitle: tr.doctorsConnectedWith,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyDoctorsScreen(),
+                      ),
+                    );
+                  },
+                ),
               _SettingsTile(
                 icon: Icons.lock_outline,
                 title: tr.changePassword,
