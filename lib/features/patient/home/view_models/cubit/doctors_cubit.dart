@@ -12,15 +12,22 @@ class DoctorsCubit extends Cubit<DoctorsState> {
   DoctorsCubit() : super(DoctorsInitial()) {
     getDoctorsList();
   }
-//--> Variables
+
   List<DoctorModel> doctors = [];
   List<DoctorModel> filteredDoctors = [];
   final supabase = getIt<SupabaseClient>();
 
   String _searchQuery = '';
   String? _selectedSpecialty;
+  String? _selectedGovernorate;
 
   String? get selectedSpecialty => _selectedSpecialty;
+  String? get selectedGovernorate => _selectedGovernorate;
+
+  /// How many filters are currently active
+  int get activeFilterCount =>
+      (_selectedSpecialty != null ? 1 : 0) +
+      (_selectedGovernorate != null ? 1 : 0);
 
   /// All unique specialty names from loaded doctors
   List<String> get specialties {
@@ -31,9 +38,18 @@ class DoctorsCubit extends Cubit<DoctorsState> {
     return set.toList()..sort();
   }
 
-//--> Methods
-  // get doctors list
-  getDoctorsList() async {
+  /// All unique governorates from loaded doctors (non-null only)
+  List<String> get governorates {
+    final set = <String>{};
+    for (final doc in doctors) {
+      if (doc.governorate != null && doc.governorate!.isNotEmpty) {
+        set.add(doc.governorate!);
+      }
+    }
+    return set.toList()..sort();
+  }
+
+  Future<void> getDoctorsList() async {
     try {
       emit(GetDoctorsLoading());
       final response = await supabase.from('doctors').select('''
@@ -64,29 +80,45 @@ class DoctorsCubit extends Cubit<DoctorsState> {
     _applyFilters();
   }
 
+  /// Filter by governorate (pass null to clear)
+  void filterByGovernorate(String? governorate) {
+    _selectedGovernorate = governorate;
+    _applyFilters();
+  }
+
   /// Clear all filters and search
   void clearFilters() {
     _searchQuery = '';
     _selectedSpecialty = null;
+    _selectedGovernorate = null;
     _applyFilters();
   }
 
   void _applyFilters() {
     filteredDoctors = doctors.where((doc) {
-      // Search filter
+      // Text search (name, specialty, hospital)
       if (_searchQuery.isNotEmpty) {
         final name = doc.doctor?.name.toLowerCase() ?? '';
         final specialty = doc.specialty.name.toLowerCase();
         final hospital = doc.hospital.toLowerCase();
+        final governorate = doc.governorate?.toLowerCase() ?? '';
+        final center = doc.center?.toLowerCase() ?? '';
         final matchesSearch = name.contains(_searchQuery) ||
             specialty.contains(_searchQuery) ||
-            hospital.contains(_searchQuery);
+            hospital.contains(_searchQuery) ||
+            governorate.contains(_searchQuery) ||
+            center.contains(_searchQuery);
         if (!matchesSearch) return false;
       }
 
       // Specialty filter
       if (_selectedSpecialty != null) {
         if (doc.specialty.name != _selectedSpecialty) return false;
+      }
+
+      // Governorate filter
+      if (_selectedGovernorate != null) {
+        if (doc.governorate != _selectedGovernorate) return false;
       }
 
       return true;

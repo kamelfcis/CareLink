@@ -31,4 +31,8 @@ class RouteNames {
   static const String settingsScreen = "settingsScreen";
   // feature/chatbot screens
   static const String chatBotScreen = "chatBotScreen";
+  // feature/patient profile
+  static const String editProfileScreen = "editProfileScreen";
+  // feature/prescriptions
+  static const String prescriptionsScreen = "prescriptionsScreen";
 }

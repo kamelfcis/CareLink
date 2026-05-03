@@ -450,6 +450,73 @@
   "arabicShort": "عربي",
   "englishShort": "EN",
 
-  "onboardingStepsCount": "4"
+  "onboardingStepsCount": "4",
+
+  "profileUpdatedSuccess": "تم تحديث الملف الشخصي بنجاح",
+  "tapToChangePhoto": "اضغط لتغيير الصورة",
+  "saveChanges": "حفظ التغييرات",
+
+  "location": "الموقع",
+  "filterByLocation": "تصفية حسب الموقع",
+  "allLocations": "جميع المواقع",
+  "governorate": "المحافظة",
+  "district": "المركز",
+  "searchByNameOrSpecialty": "ابحث بالاسم أو التخصص...",
+  "filters": "الفلاتر",
+  "activeFilters": "{count} نشط",
+  "@activeFilters": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "prescriptions": "الروشتات",
+  "managePrescriptions": "إدارة روشتاتك الطبية",
+  "addPrescription": "إضافة روشتة",
+  "prescriptionAddedSuccess": "تم إضافة الروشتة بنجاح",
+  "prescriptionDeletedSuccess": "تم حذف الروشتة بنجاح",
+  "noPrescriptionsYet": "لا توجد روشتات حتى الآن",
+  "addFirstPrescription": "اضغط + لإضافة أول روشتة.",
+  "prescriptionOptions": "خيارات الروشتة",
+  "deletePrescription": "حذف الروشتة",
+  "confirmDeletePrescription": "هل أنت متأكد من حذف هذه الروشتة؟ لا يمكن التراجع عن هذا الإجراء.",
+  "prescriptionDate": "تاريخ الروشتة",
+  "prescriptionImage": "صورة الروشتة *",
+  "tapToSelectPrescriptionImage": "اضغط لاختيار صورة الروشتة",
+  "uploadedByDoctor": "أضافها الطبيب",
+  "uploadedByPatient": "أضافها المريض",
+  "addNewPrescription": "إضافة روشتة جديدة",
+  "fillPrescriptionDetails": "رفع صورة الروشتة الطبية",
+  "prescriptionDateOptional": "تاريخ الروشتة (اختياري)",
+
+  "reviews": "التقييمات",
+  "writeReview": "اكتب تقييمًا",
+  "editReview": "تعديل التقييم",
+  "deleteReview": "حذف التقييم",
+  "yourReview": "تقييمك",
+  "noReviewsYet": "لا توجد تقييمات بعد",
+  "beFirstToReview": "كن أول من يقيّم هذا الطبيب!",
+  "rateYourExperience": "قيّم تجربتك",
+  "writeYourReview": "اكتب تقييمك (اختياري)",
+  "submitReview": "إرسال التقييم",
+  "reviewSubmittedSuccess": "تم إرسال التقييم بنجاح",
+  "reviewDeletedSuccess": "تم حذف التقييم بنجاح",
+  "selectRating": "يرجى اختيار تقييم",
+  "outOf5": "/ 5",
+  "basedOnReviews": "{count} تقييم",
+  "@basedOnReviews": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "confirmDeleteReview": "هل أنت متأكد من حذف تقييمك؟",
+  "patientReviews": "تقييمات المرضى",
+
+  "disconnect": "قطع الاتصال",
+  "disconnectDoctor": "قطع الاتصال بالطبيب",
+  "confirmDisconnect": "هل أنت متأكد أنك تريد قطع الاتصال بهذا الطبيب؟",
+  "disconnectedSuccess": "تم قطع الاتصال بنجاح",
+  "connected": "متصل",
+  "alreadyConnected": "متصل بالفعل"
 }
 

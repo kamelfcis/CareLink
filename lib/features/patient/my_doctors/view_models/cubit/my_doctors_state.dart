@@ -9,6 +9,9 @@ final class MyDoctorsLoading extends MyDoctorsState {}
 
 final class MyDoctorsSuccess extends MyDoctorsState {}
 
+/// Emitted after a doctor is successfully disconnected (list already updated)
+final class MyDoctorsDisconnectSuccess extends MyDoctorsState {}
+
 final class MyDoctorsFailure extends MyDoctorsState {
   final String errorMessage;
   MyDoctorsFailure({required this.errorMessage});

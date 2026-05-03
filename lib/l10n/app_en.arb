@@ -550,6 +550,73 @@
   "arabicShort": "عربي",
   "englishShort": "EN",
 
-  "onboardingStepsCount": "4"
+  "onboardingStepsCount": "4",
+
+  "profileUpdatedSuccess": "Profile updated successfully",
+  "tapToChangePhoto": "Tap to change photo",
+  "saveChanges": "Save Changes",
+
+  "location": "Location",
+  "filterByLocation": "Filter by Location",
+  "allLocations": "All Locations",
+  "governorate": "Governorate",
+  "district": "District",
+  "searchByNameOrSpecialty": "Search by name or specialty...",
+  "filters": "Filters",
+  "activeFilters": "{count} active",
+  "@activeFilters": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "prescriptions": "Prescriptions",
+  "managePrescriptions": "Manage your prescriptions",
+  "addPrescription": "Add Prescription",
+  "prescriptionAddedSuccess": "Prescription added successfully",
+  "prescriptionDeletedSuccess": "Prescription deleted successfully",
+  "noPrescriptionsYet": "No prescriptions yet",
+  "addFirstPrescription": "Tap the + button to add your first prescription.",
+  "prescriptionOptions": "Prescription Options",
+  "deletePrescription": "Delete Prescription",
+  "confirmDeletePrescription": "Are you sure you want to delete this prescription? This action cannot be undone.",
+  "prescriptionDate": "Prescription Date",
+  "prescriptionImage": "Prescription Image *",
+  "tapToSelectPrescriptionImage": "Tap to select prescription image",
+  "uploadedByDoctor": "Added by Doctor",
+  "uploadedByPatient": "Added by Patient",
+  "addNewPrescription": "Add New Prescription",
+  "fillPrescriptionDetails": "Upload the prescription image",
+  "prescriptionDateOptional": "Prescription Date (Optional)",
+
+  "reviews": "Reviews",
+  "writeReview": "Write a Review",
+  "editReview": "Edit Review",
+  "deleteReview": "Delete Review",
+  "yourReview": "Your Review",
+  "noReviewsYet": "No reviews yet",
+  "beFirstToReview": "Be the first to review this doctor!",
+  "rateYourExperience": "Rate your experience",
+  "writeYourReview": "Write your review (optional)",
+  "submitReview": "Submit Review",
+  "reviewSubmittedSuccess": "Review submitted successfully",
+  "reviewDeletedSuccess": "Review deleted successfully",
+  "selectRating": "Please select a rating",
+  "outOf5": "/ 5",
+  "basedOnReviews": "{count} reviews",
+  "@basedOnReviews": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "confirmDeleteReview": "Are you sure you want to delete your review?",
+  "patientReviews": "Patient Reviews",
+
+  "disconnect": "Disconnect",
+  "disconnectDoctor": "Disconnect Doctor",
+  "confirmDisconnect": "Are you sure you want to disconnect from this doctor?",
+  "disconnectedSuccess": "Disconnected successfully",
+  "connected": "Connected",
+  "alreadyConnected": "Already connected"
 }
 

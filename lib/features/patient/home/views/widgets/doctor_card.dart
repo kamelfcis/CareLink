@@ -8,9 +8,14 @@ import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {
   const DoctorCard({super.key, required this.doctor});
+
   final DoctorModel doctor;
+
   @override
   Widget build(BuildContext context) {
+    final hasLocation = (doctor.governorate?.isNotEmpty ?? false) ||
+        (doctor.center?.isNotEmpty ?? false);
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -51,6 +56,7 @@ class DoctorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // ─── Name ───
                     Row(
                       children: [
                         SizedBox(width: SizeConfig.width * 0.22),
@@ -64,7 +70,9 @@ class DoctorCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: SizeConfig.height * 0.01),
+                    SizedBox(height: SizeConfig.height * 0.008),
+
+                    // ─── Specialty + Rating ───
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -85,17 +93,25 @@ class DoctorCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 4),
-                        DoctorReview(),
+                        const SizedBox(width: 4),
+                        const DoctorReview(),
                       ],
                     ),
-                    SizedBox(height: SizeConfig.height * 0.008),
+                    SizedBox(height: SizeConfig.height * 0.007),
+
+                    // ─── Bio ───
                     Text(
                       doctor.bio,
                       style: AppTextStyles.title12White70,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+
+                    // ─── Location chip ───
+                    if (hasLocation) ...[
+                      SizedBox(height: SizeConfig.height * 0.008),
+                      _LocationChip(doctor: doctor),
+                    ],
                   ],
                 ),
               ),
@@ -103,6 +119,42 @@ class DoctorCard extends StatelessWidget {
           ),
         ),
         DoctorImage(doctorImage: doctor.doctor?.image),
+      ],
+    );
+  }
+}
+
+class _LocationChip extends StatelessWidget {
+  final DoctorModel doctor;
+
+  const _LocationChip({required this.doctor});
+
+  @override
+  Widget build(BuildContext context) {
+    final parts = <String>[];
+    if (doctor.center?.isNotEmpty ?? false) parts.add(doctor.center!);
+    if (doctor.governorate?.isNotEmpty ?? false) parts.add(doctor.governorate!);
+    final locationText = parts.join('، ');
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.location_on_rounded,
+          size: SizeConfig.width * 0.033,
+          color: Colors.white70,
+        ),
+        SizedBox(width: SizeConfig.width * 0.01),
+        Flexible(
+          child: Text(
+            locationText,
+            style: AppTextStyles.title12White70.copyWith(
+              fontSize: SizeConfig.width * 0.028,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        ),
       ],
     );
   }

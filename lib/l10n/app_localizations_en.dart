@@ -1338,4 +1338,168 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingStepsCount => '4';
+
+  @override
+  String get profileUpdatedSuccess => 'Profile updated successfully';
+
+  @override
+  String get tapToChangePhoto => 'Tap to change photo';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get filterByLocation => 'Filter by Location';
+
+  @override
+  String get allLocations => 'All Locations';
+
+  @override
+  String get governorate => 'Governorate';
+
+  @override
+  String get district => 'District';
+
+  @override
+  String get searchByNameOrSpecialty => 'Search by name or specialty...';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String activeFilters(int count) {
+    return '$count active';
+  }
+
+  @override
+  String get prescriptions => 'Prescriptions';
+
+  @override
+  String get managePrescriptions => 'Manage your prescriptions';
+
+  @override
+  String get addPrescription => 'Add Prescription';
+
+  @override
+  String get prescriptionAddedSuccess => 'Prescription added successfully';
+
+  @override
+  String get prescriptionDeletedSuccess => 'Prescription deleted successfully';
+
+  @override
+  String get noPrescriptionsYet => 'No prescriptions yet';
+
+  @override
+  String get addFirstPrescription =>
+      'Tap the + button to add your first prescription.';
+
+  @override
+  String get prescriptionOptions => 'Prescription Options';
+
+  @override
+  String get deletePrescription => 'Delete Prescription';
+
+  @override
+  String get confirmDeletePrescription =>
+      'Are you sure you want to delete this prescription? This action cannot be undone.';
+
+  @override
+  String get prescriptionDate => 'Prescription Date';
+
+  @override
+  String get prescriptionImage => 'Prescription Image *';
+
+  @override
+  String get tapToSelectPrescriptionImage => 'Tap to select prescription image';
+
+  @override
+  String get uploadedByDoctor => 'Added by Doctor';
+
+  @override
+  String get uploadedByPatient => 'Added by Patient';
+
+  @override
+  String get addNewPrescription => 'Add New Prescription';
+
+  @override
+  String get fillPrescriptionDetails => 'Upload the prescription image';
+
+  @override
+  String get prescriptionDateOptional => 'Prescription Date (Optional)';
+
+  @override
+  String get reviews => 'Reviews';
+
+  @override
+  String get writeReview => 'Write a Review';
+
+  @override
+  String get editReview => 'Edit Review';
+
+  @override
+  String get deleteReview => 'Delete Review';
+
+  @override
+  String get yourReview => 'Your Review';
+
+  @override
+  String get noReviewsYet => 'No reviews yet';
+
+  @override
+  String get beFirstToReview => 'Be the first to review this doctor!';
+
+  @override
+  String get rateYourExperience => 'Rate your experience';
+
+  @override
+  String get writeYourReview => 'Write your review (optional)';
+
+  @override
+  String get submitReview => 'Submit Review';
+
+  @override
+  String get reviewSubmittedSuccess => 'Review submitted successfully';
+
+  @override
+  String get reviewDeletedSuccess => 'Review deleted successfully';
+
+  @override
+  String get selectRating => 'Please select a rating';
+
+  @override
+  String get outOf5 => '/ 5';
+
+  @override
+  String basedOnReviews(int count) {
+    return '$count reviews';
+  }
+
+  @override
+  String get confirmDeleteReview =>
+      'Are you sure you want to delete your review?';
+
+  @override
+  String get patientReviews => 'Patient Reviews';
+
+  @override
+  String get disconnect => 'Disconnect';
+
+  @override
+  String get disconnectDoctor => 'Disconnect Doctor';
+
+  @override
+  String get confirmDisconnect =>
+      'Are you sure you want to disconnect from this doctor?';
+
+  @override
+  String get disconnectedSuccess => 'Disconnected successfully';
+
+  @override
+  String get connected => 'Connected';
+
+  @override
+  String get alreadyConnected => 'Already connected';
 }

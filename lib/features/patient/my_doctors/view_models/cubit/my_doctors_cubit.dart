@@ -37,6 +37,25 @@ class MyDoctorsCubit extends Cubit<MyDoctorsState> {
       emit(MyDoctorsFailure(errorMessage: e.toString()));
     }
   }
+
+  Future<void> disconnectFromDoctor(String doctorId) async {
+    try {
+      // Optimistic: remove from list immediately so the UI updates at once
+      myDoctors.removeWhere((d) => d.id == doctorId);
+      emit(MyDoctorsDisconnectSuccess());
+
+      final patientId = cacheHelper.getPatientModel()!.id;
+      await supabase
+          .from('doctor_patients')
+          .delete()
+          .eq('doctor_id', doctorId)
+          .eq('patient_id', patientId);
+    } catch (e) {
+      // If the API call fails, refresh the real list from DB
+      emit(MyDoctorsFailure(errorMessage: e.toString()));
+      getMyDoctors();
+    }
+  }
 }
 
 

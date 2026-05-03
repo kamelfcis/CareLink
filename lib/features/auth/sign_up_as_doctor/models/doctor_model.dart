@@ -7,12 +7,17 @@ class DoctorModel {
   final String hospital;
   final DoctorSpecialtyModel specialty;
   final UserModel? doctor;
+  final String? governorate;
+  final String? center;
+
   DoctorModel({
     required this.id,
     required this.bio,
     required this.hospital,
     required this.specialty,
     this.doctor,
+    this.governorate,
+    this.center,
   });
   static UserModel? _parseNestedUser(dynamic raw) {
     if (raw == null) return null;
@@ -45,6 +50,8 @@ class DoctorModel {
       hospital: json['hospital'],
       specialty: DoctorSpecialtyModel.fromJson(specialtyJson),
       doctor: _parseNestedUser(json['users']),
+      governorate: json['governorate'] as String?,
+      center: json['center'] as String?,
     );
   }
   toJson() {
@@ -54,6 +61,8 @@ class DoctorModel {
       'hospital': hospital,
       'doctor_specialties': specialty.toJson(),
       'users': doctor?.toJson(),
+      'governorate': governorate,
+      'center': center,
     };
   }
 
@@ -63,6 +72,8 @@ class DoctorModel {
     String? hospital,
     DoctorSpecialtyModel? specialty,
     UserModel? doctor,
+    String? governorate,
+    String? center,
   }) {
     return DoctorModel(
       id: id ?? this.id,
@@ -70,6 +81,8 @@ class DoctorModel {
       hospital: hospital ?? this.hospital,
       specialty: specialty ?? this.specialty,
       doctor: doctor ?? this.doctor,
+      governorate: governorate ?? this.governorate,
+      center: center ?? this.center,
     );
   }
 }

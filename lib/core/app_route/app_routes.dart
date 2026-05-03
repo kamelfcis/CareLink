@@ -1,4 +1,6 @@
 import 'package:care_link/features/auth/select_role/views/screens/select_role_screen.dart';
+import 'package:care_link/features/patient/prescriptions/views/screens/prescriptions_screen.dart';
+import 'package:care_link/features/patient/profile/views/screens/edit_profile_screen.dart';
 import 'package:care_link/features/auth/sign_in/view_models/cubit/sign_in_cubit.dart';
 import 'package:care_link/features/auth/sign_in/views/screens/sign_in_screen.dart';
 import 'package:care_link/features/auth/sign_up_as_doctor/view_models/cubit/sign_up_as_doctor_cubit.dart';
@@ -15,6 +17,7 @@ import 'package:care_link/features/on_boarding/views/screens/on_boarding_screen.
 import 'package:care_link/features/patient/allergies/views/screens/allergies_screen.dart';
 import 'package:care_link/features/patient/chronic_conditions/views/screens/chronic_conditions_screen.dart';
 import 'package:care_link/features/patient/doctor_details/view_models/cubit/connect_with_doctor_cubit.dart';
+import 'package:care_link/features/patient/doctor_details/view_models/cubit/doctor_reviews_cubit.dart';
 import 'package:care_link/features/patient/doctor_details/views/screens/doctor_details_screen.dart';
 import 'package:care_link/features/patient/home/view_models/cubit/doctors_cubit.dart';
 import 'package:care_link/features/patient/home/views/screens/home_screen.dart';
@@ -67,13 +70,23 @@ class AppRoutes {
     RouteNames.labTestsScreen: (context) => const LabTestsScreen(),
     RouteNames.settingsScreen: (context) => const SettingsScreen(),
     RouteNames.patientDetailsScreen: (context) => const PatientProfileScreen(),
-    RouteNames.doctorDetailsScreen: (context) => BlocProvider(
-          create: (context) => ConnectWithDoctorCubit(),
+    RouteNames.doctorDetailsScreen: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => ConnectWithDoctorCubit()),
+            BlocProvider(create: (_) => DoctorReviewsCubit()),
+          ],
           child: const DoctorProfileScreen(),
         ),
     RouteNames.chatBotScreen: (context) => BlocProvider(
           create: (context) => ChatBotCubit(),
           child: const ChatBotScreen(),
         ),
+    RouteNames.editProfileScreen: (context) {
+      final patient = ModalRoute.of(context)!.settings.arguments
+          as dynamic; // PatientModel passed as argument
+      return EditProfileScreen(patient: patient);
+    },
+    RouteNames.prescriptionsScreen: (context) =>
+        const PrescriptionsScreen(),
   };
 }

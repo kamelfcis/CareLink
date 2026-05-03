@@ -6,6 +6,7 @@ import 'package:care_link/core/utilies/sizes/sized_config.dart';
 import 'package:care_link/core/utilies/styles/app_text_styles.dart';
 import 'package:care_link/features/auth/sign_up_as_doctor/models/doctor_model.dart';
 import 'package:care_link/features/patient/my_doctors/view_models/cubit/my_doctors_cubit.dart';
+import 'package:custom_quick_alert/custom_quick_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -108,18 +109,32 @@ class _MyDoctorsBody extends StatelessWidget {
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(28)),
                   ),
-                  child: BlocBuilder<MyDoctorsCubit, MyDoctorsState>(
+                  child: BlocConsumer<MyDoctorsCubit, MyDoctorsState>(
+                    listener: (context, state) {
+                      if (state is MyDoctorsDisconnectSuccess) {
+                        CustomQuickAlert.success(
+                          title: context.tr.success,
+                          message: context.tr.disconnectedSuccess,
+                        );
+                      } else if (state is MyDoctorsFailure) {
+                        CustomQuickAlert.error(
+                          title: context.tr.error,
+                          message: state.errorMessage,
+                        );
+                      }
+                    },
                     builder: (context, state) {
                       if (state is MyDoctorsLoading) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (state is MyDoctorsFailure) {
-                        return _buildErrorView(context, state.errorMessage);
-                      }
+                      // Show list for both Success and DisconnectSuccess states
                       final doctors =
                           context.read<MyDoctorsCubit>().myDoctors;
+                      if (state is MyDoctorsFailure && doctors.isEmpty) {
+                        return _buildErrorView(context, state.errorMessage);
+                      }
                       if (doctors.isEmpty) {
                         return _buildEmptyView(context);
                       }
@@ -136,27 +151,38 @@ class _MyDoctorsBody extends StatelessWidget {
   }
 
   Widget _buildDoctorsList(BuildContext context, List<DoctorModel> doctors) {
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.width * 0.04,
-        vertical: SizeConfig.height * 0.02,
+    return RefreshIndicator(
+      color: AppColors.kPrimaryColor,
+      onRefresh: () => context.read<MyDoctorsCubit>().getMyDoctors(),
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.width * 0.04,
+          vertical: SizeConfig.height * 0.02,
+        ),
+        itemCount: doctors.length,
+        itemBuilder: (context, index) {
+          final doctor = doctors[index];
+          return _DoctorCard(doctor: doctor);
+        },
       ),
-      itemCount: doctors.length,
-      itemBuilder: (context, index) {
-        final doctor = doctors[index];
-        return _DoctorCard(doctor: doctor);
-      },
     );
   }
 
   Widget _buildEmptyView(BuildContext context) {
     final tr = context.tr;
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(SizeConfig.width * 0.08),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+    return RefreshIndicator(
+      color: AppColors.kPrimaryColor,
+      onRefresh: () => context.read<MyDoctorsCubit>().getMyDoctors(),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: SizedBox(
+          height: SizeConfig.height * 0.7,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(SizeConfig.width * 0.08),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
             Container(
               padding: EdgeInsets.all(SizeConfig.width * 0.06),
               decoration: BoxDecoration(
@@ -187,7 +213,10 @@ class _MyDoctorsBody extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-          ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -248,131 +277,232 @@ class _DoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
-    return GestureDetector(
-      onTap: () {
-        context.pushScreen(
-          RouteNames.doctorDetailsScreen,
-          arguments: doctor.toJson(),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: SizeConfig.height * 0.015),
-        padding: EdgeInsets.all(SizeConfig.width * 0.04),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // Doctor avatar
-            Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.kPrimaryColor.withOpacity(0.3),
-                  width: 2,
-                ),
-              ),
-              child: CircleAvatar(
-                radius: SizeConfig.width * 0.075,
-                backgroundImage: doctor.doctor != null
-                    ? NetworkImage(doctor.doctor!.image)
-                    : null,
-                child: doctor.doctor == null
-                    ? Icon(Icons.person,
-                        size: SizeConfig.width * 0.07,
-                        color: Colors.grey)
-                    : null,
-              ),
-            ),
-            SizedBox(width: SizeConfig.width * 0.035),
-            // Doctor info
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      margin: EdgeInsets.only(bottom: SizeConfig.height * 0.015),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // ─── Doctor info row ────────────────────────────────────────
+          InkWell(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            onTap: () {
+              context.pushScreen(
+                RouteNames.doctorDetailsScreen,
+                arguments: doctor.toJson(),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.all(SizeConfig.width * 0.04),
+              child: Row(
                 children: [
-                  Text(
-                    doctor.doctor?.name ?? '',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                  // Avatar
+                  Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.kPrimaryColor.withOpacity(0.3),
+                        width: 2,
+                      ),
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    child: CircleAvatar(
+                      radius: SizeConfig.width * 0.07,
+                      backgroundImage: (doctor.doctor?.image.isNotEmpty ?? false)
+                          ? NetworkImage(doctor.doctor!.image)
+                          : null,
+                      child: (doctor.doctor?.image.isEmpty ?? true)
+                          ? Icon(Icons.person,
+                              size: SizeConfig.width * 0.07,
+                              color: Colors.grey)
+                          : null,
+                    ),
                   ),
-                  SizedBox(height: 4),
-                  Row(
-                    children: [
-                      if (doctor.specialty.icon != null) ...[
+                  SizedBox(width: SizeConfig.width * 0.035),
+                  // Info
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          doctor.specialty.icon!,
-                          style: const TextStyle(fontSize: 14),
+                          doctor.doctor?.name ?? '',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(height: 3),
+                        Row(
+                          children: [
+                            if (doctor.specialty.icon != null) ...[
+                              Text(doctor.specialty.icon!,
+                                  style: const TextStyle(fontSize: 13)),
+                              const SizedBox(width: 4),
+                            ],
+                            Expanded(
+                              child: Text(
+                                doctor.specialty.name,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.kPrimaryColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 3),
+                        Row(
+                          children: [
+                            Icon(Icons.location_on_outlined,
+                                size: 13, color: Colors.grey.shade500),
+                            const SizedBox(width: 3),
+                            Expanded(
+                              child: Text(
+                                doctor.hospital,
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey.shade600),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
-                      Expanded(
-                        child: Text(
-                          doctor.specialty.name,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.kPrimaryColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        size: 14,
-                        color: Colors.grey.shade500,
-                      ),
-                      SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          doctor.hospital,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
+                  // Connected badge
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.width * 0.025,
+                      vertical: SizeConfig.height * 0.005,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.check_circle_rounded,
+                            color: Colors.green, size: 13),
+                        const SizedBox(width: 4),
+                        Text(
+                          tr.connected,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Colors.green,
+                            fontWeight: FontWeight.w600,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-            // Arrow
-            Container(
-              padding: EdgeInsets.all(SizeConfig.width * 0.02),
-              decoration: BoxDecoration(
-                color: AppColors.kPrimaryColor.withOpacity(0.08),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: SizeConfig.width * 0.04,
-                color: AppColors.kPrimaryColor,
-              ),
+          ),
+
+          // ─── Divider ────────────────────────────────────────────────
+          Divider(
+              height: 1,
+              color: Colors.grey.shade100,
+              indent: SizeConfig.width * 0.04,
+              endIndent: SizeConfig.width * 0.04),
+
+          // ─── Action buttons row ──────────────────────────────────────
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.width * 0.03,
+              vertical: SizeConfig.height * 0.01,
             ),
-          ],
-        ),
+            child: Row(
+              children: [
+                // View profile button
+                Expanded(
+                  child: TextButton.icon(
+                    onPressed: () {
+                      context.pushScreen(
+                        RouteNames.doctorDetailsScreen,
+                        arguments: doctor.toJson(),
+                      );
+                    },
+                    icon: Icon(Icons.person_outline,
+                        size: 16, color: AppColors.kPrimaryColor),
+                    label: Text(
+                      tr.viewMore,
+                      style: TextStyle(
+                          color: AppColors.kPrimaryColor, fontSize: 13),
+                    ),
+                  ),
+                ),
+                // Disconnect button
+                Expanded(
+                  child: TextButton.icon(
+                    onPressed: () => _confirmDisconnect(context, tr),
+                    icon: const Icon(Icons.link_off_rounded,
+                        size: 16, color: Colors.red),
+                    label: Text(
+                      tr.disconnect,
+                      style:
+                          const TextStyle(color: Colors.red, fontSize: 13),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _confirmDisconnect(BuildContext context, dynamic tr) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(tr.disconnectDoctor,
+            style: AppTextStyles.title18BlackW500),
+        content: Text(tr.confirmDisconnect),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(tr.cancel,
+                style: TextStyle(color: AppColors.kPrimaryColor)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context
+                  .read<MyDoctorsCubit>()
+                  .disconnectFromDoctor(doctor.id);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red.shade600,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text(tr.disconnect),
+          ),
+        ],
       ),
     );
   }

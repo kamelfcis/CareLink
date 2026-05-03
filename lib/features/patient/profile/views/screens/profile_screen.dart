@@ -9,16 +9,42 @@ import 'package:care_link/core/utilies/sizes/sized_config.dart';
 import 'package:care_link/core/utilies/styles/app_text_styles.dart';
 import 'package:care_link/features/auth/sign_up_as_patient/models/patient_model.dart';
 import 'package:care_link/features/patient/home/views/widgets/gradient_header.dart';
+import 'package:care_link/features/patient/profile/views/screens/edit_profile_screen.dart';
 import 'package:care_link/features/patient/shared/widgets/patient_identity_qr.dart';
 import 'package:flutter/material.dart';
 
-class PatientProfileScreen extends StatelessWidget {
+class PatientProfileScreen extends StatefulWidget {
   final PatientModel patient;
 
   const PatientProfileScreen({
     super.key,
     required this.patient,
   });
+
+  @override
+  State<PatientProfileScreen> createState() => _PatientProfileScreenState();
+}
+
+class _PatientProfileScreenState extends State<PatientProfileScreen> {
+  late PatientModel _patient;
+
+  @override
+  void initState() {
+    super.initState();
+    _patient = widget.patient;
+  }
+
+  Future<void> _openEditProfile() async {
+    final result = await Navigator.push<PatientModel>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => EditProfileScreen(patient: _patient),
+      ),
+    );
+    if (result != null && mounted) {
+      setState(() => _patient = result);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +54,17 @@ class PatientProfileScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.all(SizeConfig.width * 0.04),
           children: [
-            _Header(patient: patient),
+            _Header(patient: _patient, onEditTap: _openEditProfile),
             SizedBox(height: SizeConfig.height * 0.016),
             PatientIdentityQrCard(
-              patientId: patient.id,
-              patientName: patient.patient?.name ?? '',
+              patientId: _patient.id,
+              patientName: _patient.patient?.name ?? '',
               compact: false,
             ),
             SizedBox(height: SizeConfig.height * 0.02),
-            _BasicInfoCard(patient: patient),
+            _BasicInfoCard(patient: _patient),
             SizedBox(height: SizeConfig.height * 0.02),
-            _EmergencyContactCard(patient: patient),
+            _EmergencyContactCard(patient: _patient),
             SizedBox(height: SizeConfig.height * 0.025),
             _SectionTitle(title: context.tr.medicalRecords),
             SizedBox(height: SizeConfig.height * 0.012),
@@ -54,8 +80,9 @@ class PatientProfileScreen extends StatelessWidget {
 
 class _Header extends StatelessWidget {
   final PatientModel patient;
+  final VoidCallback onEditTap;
 
-  const _Header({required this.patient});
+  const _Header({required this.patient, required this.onEditTap});
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +118,23 @@ class _Header extends StatelessWidget {
                   maxLines: 1,
                 ),
               ],
+            ),
+          ),
+          // Edit button
+          GestureDetector(
+            onTap: onEditTap,
+            child: Container(
+              padding: EdgeInsets.all(SizeConfig.width * 0.02),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.25),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white.withOpacity(0.4)),
+              ),
+              child: Icon(
+                Icons.edit_outlined,
+                color: Colors.white,
+                size: SizeConfig.width * 0.055,
+              ),
             ),
           ),
         ],
@@ -231,6 +275,16 @@ class _MedicalGrid extends StatelessWidget {
           onTap: () {
             context.pushScreen(RouteNames.labTestsScreen,
                 arguments: patientId);
+          },
+        ),
+        _MedicalItem(
+          title: context.tr.prescriptions,
+          icon: Icons.receipt_long_outlined,
+          onTap: () {
+            context.pushScreen(
+              RouteNames.prescriptionsScreen,
+              arguments: {'patient_id': patientId, 'is_doctor': false},
+            );
           },
         ),
       ],

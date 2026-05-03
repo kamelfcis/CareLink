@@ -1327,4 +1327,166 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingStepsCount => '4';
+
+  @override
+  String get profileUpdatedSuccess => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String get tapToChangePhoto => 'اضغط لتغيير الصورة';
+
+  @override
+  String get saveChanges => 'حفظ التغييرات';
+
+  @override
+  String get location => 'الموقع';
+
+  @override
+  String get filterByLocation => 'تصفية حسب الموقع';
+
+  @override
+  String get allLocations => 'جميع المواقع';
+
+  @override
+  String get governorate => 'المحافظة';
+
+  @override
+  String get district => 'المركز';
+
+  @override
+  String get searchByNameOrSpecialty => 'ابحث بالاسم أو التخصص...';
+
+  @override
+  String get filters => 'الفلاتر';
+
+  @override
+  String activeFilters(int count) {
+    return '$count نشط';
+  }
+
+  @override
+  String get prescriptions => 'الروشتات';
+
+  @override
+  String get managePrescriptions => 'إدارة روشتاتك الطبية';
+
+  @override
+  String get addPrescription => 'إضافة روشتة';
+
+  @override
+  String get prescriptionAddedSuccess => 'تم إضافة الروشتة بنجاح';
+
+  @override
+  String get prescriptionDeletedSuccess => 'تم حذف الروشتة بنجاح';
+
+  @override
+  String get noPrescriptionsYet => 'لا توجد روشتات حتى الآن';
+
+  @override
+  String get addFirstPrescription => 'اضغط + لإضافة أول روشتة.';
+
+  @override
+  String get prescriptionOptions => 'خيارات الروشتة';
+
+  @override
+  String get deletePrescription => 'حذف الروشتة';
+
+  @override
+  String get confirmDeletePrescription =>
+      'هل أنت متأكد من حذف هذه الروشتة؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get prescriptionDate => 'تاريخ الروشتة';
+
+  @override
+  String get prescriptionImage => 'صورة الروشتة *';
+
+  @override
+  String get tapToSelectPrescriptionImage => 'اضغط لاختيار صورة الروشتة';
+
+  @override
+  String get uploadedByDoctor => 'أضافها الطبيب';
+
+  @override
+  String get uploadedByPatient => 'أضافها المريض';
+
+  @override
+  String get addNewPrescription => 'إضافة روشتة جديدة';
+
+  @override
+  String get fillPrescriptionDetails => 'رفع صورة الروشتة الطبية';
+
+  @override
+  String get prescriptionDateOptional => 'تاريخ الروشتة (اختياري)';
+
+  @override
+  String get reviews => 'التقييمات';
+
+  @override
+  String get writeReview => 'اكتب تقييمًا';
+
+  @override
+  String get editReview => 'تعديل التقييم';
+
+  @override
+  String get deleteReview => 'حذف التقييم';
+
+  @override
+  String get yourReview => 'تقييمك';
+
+  @override
+  String get noReviewsYet => 'لا توجد تقييمات بعد';
+
+  @override
+  String get beFirstToReview => 'كن أول من يقيّم هذا الطبيب!';
+
+  @override
+  String get rateYourExperience => 'قيّم تجربتك';
+
+  @override
+  String get writeYourReview => 'اكتب تقييمك (اختياري)';
+
+  @override
+  String get submitReview => 'إرسال التقييم';
+
+  @override
+  String get reviewSubmittedSuccess => 'تم إرسال التقييم بنجاح';
+
+  @override
+  String get reviewDeletedSuccess => 'تم حذف التقييم بنجاح';
+
+  @override
+  String get selectRating => 'يرجى اختيار تقييم';
+
+  @override
+  String get outOf5 => '/ 5';
+
+  @override
+  String basedOnReviews(int count) {
+    return '$count تقييم';
+  }
+
+  @override
+  String get confirmDeleteReview => 'هل أنت متأكد من حذف تقييمك؟';
+
+  @override
+  String get patientReviews => 'تقييمات المرضى';
+
+  @override
+  String get disconnect => 'قطع الاتصال';
+
+  @override
+  String get disconnectDoctor => 'قطع الاتصال بالطبيب';
+
+  @override
+  String get confirmDisconnect =>
+      'هل أنت متأكد أنك تريد قطع الاتصال بهذا الطبيب؟';
+
+  @override
+  String get disconnectedSuccess => 'تم قطع الاتصال بنجاح';
+
+  @override
+  String get connected => 'متصل';
+
+  @override
+  String get alreadyConnected => 'متصل بالفعل';
 }

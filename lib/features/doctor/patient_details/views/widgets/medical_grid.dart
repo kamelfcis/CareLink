@@ -63,7 +63,18 @@ class MedicalGrid extends StatelessWidget {
           title: context.tr.labTests,
           icon: Icons.science_outlined,
           onTap: () {
-            context.pushScreen(RouteNames.labTestsScreen, arguments: patientId);
+            context.pushScreen(RouteNames.labTestsScreen,
+                arguments: patientId);
+          },
+        ),
+        MedicalItem(
+          title: context.tr.prescriptions,
+          icon: Icons.receipt_long_outlined,
+          onTap: () {
+            context.pushScreen(
+              RouteNames.prescriptionsScreen,
+              arguments: {'patient_id': patientId, 'is_doctor': true},
+            );
           },
         ),
       ],

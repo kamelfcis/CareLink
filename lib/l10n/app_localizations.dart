@@ -2581,6 +2581,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'4'**
   String get onboardingStepsCount;
+
+  /// No description provided for @profileUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdatedSuccess;
+
+  /// No description provided for @tapToChangePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to change photo'**
+  String get tapToChangePhoto;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @filterByLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Location'**
+  String get filterByLocation;
+
+  /// No description provided for @allLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'All Locations'**
+  String get allLocations;
+
+  /// No description provided for @governorate.
+  ///
+  /// In en, this message translates to:
+  /// **'Governorate'**
+  String get governorate;
+
+  /// No description provided for @district.
+  ///
+  /// In en, this message translates to:
+  /// **'District'**
+  String get district;
+
+  /// No description provided for @searchByNameOrSpecialty.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or specialty...'**
+  String get searchByNameOrSpecialty;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @activeFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} active'**
+  String activeFilters(int count);
+
+  /// No description provided for @prescriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescriptions'**
+  String get prescriptions;
+
+  /// No description provided for @managePrescriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your prescriptions'**
+  String get managePrescriptions;
+
+  /// No description provided for @addPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Prescription'**
+  String get addPrescription;
+
+  /// No description provided for @prescriptionAddedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription added successfully'**
+  String get prescriptionAddedSuccess;
+
+  /// No description provided for @prescriptionDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription deleted successfully'**
+  String get prescriptionDeletedSuccess;
+
+  /// No description provided for @noPrescriptionsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No prescriptions yet'**
+  String get noPrescriptionsYet;
+
+  /// No description provided for @addFirstPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the + button to add your first prescription.'**
+  String get addFirstPrescription;
+
+  /// No description provided for @prescriptionOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Options'**
+  String get prescriptionOptions;
+
+  /// No description provided for @deletePrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Prescription'**
+  String get deletePrescription;
+
+  /// No description provided for @confirmDeletePrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this prescription? This action cannot be undone.'**
+  String get confirmDeletePrescription;
+
+  /// No description provided for @prescriptionDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Date'**
+  String get prescriptionDate;
+
+  /// No description provided for @prescriptionImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Image *'**
+  String get prescriptionImage;
+
+  /// No description provided for @tapToSelectPrescriptionImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to select prescription image'**
+  String get tapToSelectPrescriptionImage;
+
+  /// No description provided for @uploadedByDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by Doctor'**
+  String get uploadedByDoctor;
+
+  /// No description provided for @uploadedByPatient.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by Patient'**
+  String get uploadedByPatient;
+
+  /// No description provided for @addNewPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Prescription'**
+  String get addNewPrescription;
+
+  /// No description provided for @fillPrescriptionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload the prescription image'**
+  String get fillPrescriptionDetails;
+
+  /// No description provided for @prescriptionDateOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Date (Optional)'**
+  String get prescriptionDateOptional;
+
+  /// No description provided for @reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get reviews;
+
+  /// No description provided for @writeReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a Review'**
+  String get writeReview;
+
+  /// No description provided for @editReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Review'**
+  String get editReview;
+
+  /// No description provided for @deleteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Review'**
+  String get deleteReview;
+
+  /// No description provided for @yourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Review'**
+  String get yourReview;
+
+  /// No description provided for @noReviewsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get noReviewsYet;
+
+  /// No description provided for @beFirstToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to review this doctor!'**
+  String get beFirstToReview;
+
+  /// No description provided for @rateYourExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate your experience'**
+  String get rateYourExperience;
+
+  /// No description provided for @writeYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your review (optional)'**
+  String get writeYourReview;
+
+  /// No description provided for @submitReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Review'**
+  String get submitReview;
+
+  /// No description provided for @reviewSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Review submitted successfully'**
+  String get reviewSubmittedSuccess;
+
+  /// No description provided for @reviewDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Review deleted successfully'**
+  String get reviewDeletedSuccess;
+
+  /// No description provided for @selectRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a rating'**
+  String get selectRating;
+
+  /// No description provided for @outOf5.
+  ///
+  /// In en, this message translates to:
+  /// **'/ 5'**
+  String get outOf5;
+
+  /// No description provided for @basedOnReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reviews'**
+  String basedOnReviews(int count);
+
+  /// No description provided for @confirmDeleteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your review?'**
+  String get confirmDeleteReview;
+
+  /// No description provided for @patientReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Reviews'**
+  String get patientReviews;
+
+  /// No description provided for @disconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get disconnect;
+
+  /// No description provided for @disconnectDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect Doctor'**
+  String get disconnectDoctor;
+
+  /// No description provided for @confirmDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to disconnect from this doctor?'**
+  String get confirmDisconnect;
+
+  /// No description provided for @disconnectedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected successfully'**
+  String get disconnectedSuccess;
+
+  /// No description provided for @connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connected;
+
+  /// No description provided for @alreadyConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Already connected'**
+  String get alreadyConnected;
 }
 
 class _AppLocalizationsDelegate
