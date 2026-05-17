@@ -836,6 +836,21 @@ class _LocationTab extends StatelessWidget {
 class DoctorsListView extends StatelessWidget {
   const DoctorsListView({super.key});
 
+  Future<void> _onRefresh(BuildContext context) {
+    return context.read<DoctorsCubit>().refreshDoctors();
+  }
+
+  Widget _refreshable({
+    required BuildContext context,
+    required Widget child,
+  }) {
+    return RefreshIndicator(
+      color: AppColors.kPrimaryColor,
+      onRefresh: () => _onRefresh(context),
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -845,27 +860,69 @@ class DoctorsListView extends StatelessWidget {
             return const CustomLoadingIndicator();
           }
           if (state is GetDoctorsFailure) {
-            return CustomFailureMesage(errorMessage: state.errorMessage);
+            return _refreshable(
+              context: context,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  child: CustomFailureMesage(
+                    errorMessage: state.errorMessage,
+                  ),
+                ),
+              ),
+            );
           }
 
           final cubit = context.read<DoctorsCubit>();
           final doctors = cubit.filteredDoctors;
 
           if (doctors.isEmpty && cubit.doctors.isNotEmpty) {
-            return _EmptyFilterResult();
+            return _refreshable(
+              context: context,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  child: _EmptyFilterResult(),
+                ),
+              ),
+            );
           }
 
-          return ListView.builder(
-            itemCount: doctors.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () => context.pushScreen(
-                  RouteNames.doctorDetailsScreen,
-                  arguments: doctors[index].toJson(),
+          if (doctors.isEmpty) {
+            return _refreshable(
+              context: context,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  child: Center(
+                    child: Text(
+                      context.tr.noResultsFound,
+                      style: AppTextStyles.title14Grey,
+                    ),
+                  ),
                 ),
-                child: DoctorCard(doctor: doctors[index]),
-              );
-            },
+              ),
+            );
+          }
+
+          return _refreshable(
+            context: context,
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: doctors.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => context.pushScreen(
+                    RouteNames.doctorDetailsScreen,
+                    arguments: doctors[index].toJson(),
+                  ),
+                  child: DoctorCard(doctor: doctors[index]),
+                );
+              },
+            ),
           );
         },
       ),

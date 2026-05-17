@@ -49,20 +49,47 @@ class DoctorsCubit extends Cubit<DoctorsState> {
     return set.toList()..sort();
   }
 
-  Future<void> getDoctorsList() async {
+  /// Pull-to-refresh: reload doctors without replacing the list with a full-screen loader.
+  Future<void> refreshDoctors() => getDoctorsList(showLoading: false);
+
+  Future<void> getDoctorsList({bool showLoading = true}) async {
     try {
-      emit(GetDoctorsLoading());
-      final response = await supabase.from('doctors').select('''
-      *,
-      users (*),
-      doctor_specialties (*)
-    ''');
-      log(response.toString());
-      doctors = (response as List)
-          .map<DoctorModel>((e) => DoctorModel.fromJson(e))
-          .toList();
-      filteredDoctors = List.from(doctors);
-      emit(GetDoctorsSuccess());
+      if (showLoading) emit(GetDoctorsLoading());
+
+      // Fetch doctors and all reviews in parallel
+      final results = await Future.wait([
+        supabase.from('doctors').select('''
+          *,
+          users (*),
+          doctor_specialties (*)
+        '''),
+        supabase.from('doctor_reviews').select('doctor_id, rating'),
+      ]);
+
+      final doctorResponse = results[0] as List;
+      final reviewResponse = results[1] as List;
+
+      // Build a map: doctor_id -> {sum, count}
+      final Map<String, _RatingAccum> ratingMap = {};
+      for (final row in reviewResponse) {
+        final doctorId = row['doctor_id'] as String?;
+        final rating = (row['rating'] as num?)?.toDouble();
+        if (doctorId == null || rating == null) continue;
+        ratingMap.putIfAbsent(doctorId, () => _RatingAccum()).add(rating);
+      }
+
+      log(doctorResponse.toString());
+      doctors = doctorResponse.map<DoctorModel>((e) {
+        final model = DoctorModel.fromJson(e);
+        final accum = ratingMap[model.id];
+        if (accum == null || accum.count == 0) return model;
+        return model.withRating(
+          averageRating: accum.sum / accum.count,
+          reviewCount: accum.count,
+        );
+      }).toList();
+
+      _applyFilters();
     } catch (e) {
       emit(GetDoctorsFailure(errorMessage: e.toString()));
     }
@@ -125,5 +152,14 @@ class DoctorsCubit extends Cubit<DoctorsState> {
     }).toList();
 
     emit(DoctorsFiltered());
+  }
+}
+
+class _RatingAccum {
+  double sum = 0;
+  int count = 0;
+  void add(double rating) {
+    sum += rating;
+    count++;
   }
 }

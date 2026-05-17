@@ -9,6 +9,8 @@ class DoctorModel {
   final UserModel? doctor;
   final String? governorate;
   final String? center;
+  final double averageRating;
+  final int reviewCount;
 
   DoctorModel({
     required this.id,
@@ -18,6 +20,8 @@ class DoctorModel {
     this.doctor,
     this.governorate,
     this.center,
+    this.averageRating = 0.0,
+    this.reviewCount = 0,
   });
   static UserModel? _parseNestedUser(dynamic raw) {
     if (raw == null) return null;
@@ -54,6 +58,21 @@ class DoctorModel {
       center: json['center'] as String?,
     );
   }
+
+  DoctorModel withRating({required double averageRating, required int reviewCount}) {
+    return DoctorModel(
+      id: id,
+      bio: bio,
+      hospital: hospital,
+      specialty: specialty,
+      doctor: doctor,
+      governorate: governorate,
+      center: center,
+      averageRating: averageRating,
+      reviewCount: reviewCount,
+    );
+  }
+
   toJson() {
     return {
       'id': id,
@@ -74,6 +93,8 @@ class DoctorModel {
     UserModel? doctor,
     String? governorate,
     String? center,
+    double? averageRating,
+    int? reviewCount,
   }) {
     return DoctorModel(
       id: id ?? this.id,
@@ -83,6 +104,8 @@ class DoctorModel {
       doctor: doctor ?? this.doctor,
       governorate: governorate ?? this.governorate,
       center: center ?? this.center,
+      averageRating: averageRating ?? this.averageRating,
+      reviewCount: reviewCount ?? this.reviewCount,
     );
   }
 }

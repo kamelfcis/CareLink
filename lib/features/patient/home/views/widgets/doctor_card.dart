@@ -94,7 +94,10 @@ class DoctorCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        const DoctorReview(),
+                        DoctorReview(
+                          averageRating: doctor.averageRating,
+                          reviewCount: doctor.reviewCount,
+                        ),
                       ],
                     ),
                     SizedBox(height: SizeConfig.height * 0.007),
