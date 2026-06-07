@@ -5,10 +5,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> signInWithPassword(
     {required String email, required String password}) async {
+  final normalizedEmail = email.trim().toLowerCase();
   try {
     await getIt<SupabaseClient>()
         .auth
-        .signInWithPassword(email: email, password: password);
+        .signInWithPassword(email: normalizedEmail, password: password);
   } on AuthException catch (e) {
     throw SupabaseExceptions(errorMessage: handleAuthError(e));
   } catch (e) {

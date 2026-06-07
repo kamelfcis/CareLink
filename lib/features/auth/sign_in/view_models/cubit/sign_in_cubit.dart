@@ -39,16 +39,38 @@ class SignInCubit extends Cubit<SignInState> {
   }
 
   Future<void> getUserData() async {
+    final authUser = supabase.auth.currentUser;
+    if (authUser == null) {
+      throw Exception("User not found");
+    }
+
     try {
-      final userData = await getDataWithSpacificId(
+      var userData = await getDataWithSpacificId(
         tableName: "users",
         primaryKey: "id",
-        id: supabase.auth.currentUser!.id,
+        id: authUser.id,
       );
+
+      if (userData.isEmpty) {
+        await supabase.from('users').upsert({
+          'id': authUser.id,
+          'email': authUser.email ?? '',
+          'name': authUser.userMetadata?['full_name']?.toString() ?? '',
+          'role': UserRole.patient.name,
+        });
+        userData = await getDataWithSpacificId(
+          tableName: "users",
+          primaryKey: "id",
+          id: authUser.id,
+        );
+      }
+
       if (userData.isEmpty) {
         throw Exception("User not found");
       }
+
       userModel = UserModel.fromJson(userData.first);
+
       if (userModel!.role == UserRole.doctor.name) {
         final doctorData =
             await getIt<SupabaseClient>().from('doctors').select('''
@@ -60,17 +82,32 @@ class SignInCubit extends Cubit<SignInState> {
         doctorModel = doctorModel.copyWith(doctor: userModel!);
         await getIt<CacheHelper>().saveDoctorModel(doctorModel);
       } else {
-        final patientData = await getDataWithSpacificId(
+        var patientData = await getDataWithSpacificId(
           tableName: "patients",
           primaryKey: "patient_id",
           id: userModel!.id,
         );
+
+        if (patientData.isEmpty) {
+          patientData = await getDataWithSpacificId(
+            tableName: "patients",
+            primaryKey: "auth_user_id",
+            id: userModel!.id,
+          );
+        }
+
+        if (patientData.isEmpty) {
+          throw Exception("Patient profile not found");
+        }
+
         PatientModel patientModel = PatientModel.fromJson(patientData.first);
         patientModel = patientModel.copyWith(patient: userModel!);
         await getIt<CacheHelper>().savePatientModel(patientModel);
       }
-    } catch (e) {
-      log(e.toString());
+    } on Exception {
+      rethrow;
+    } catch (e, stackTrace) {
+      log('getUserData failed: $e', stackTrace: stackTrace);
       throw Exception("Failed to fetch user data or user not found");
     }
   }

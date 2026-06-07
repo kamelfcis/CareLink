@@ -9,10 +9,14 @@ class EmergencyContactModel {
     required this.phone,
   });
   factory EmergencyContactModel.fromJson(Map<String, dynamic> json) {
+    String safeString(dynamic value) => value?.toString() ?? '';
+
     return EmergencyContactModel(
-      name: json['name'],
-      relationship: json['relationship'],
-      phone: json['phone'],
+      name: safeString(json['name']),
+      relationship: safeString(
+        json['relationship'] ?? json['relation'],
+      ),
+      phone: safeString(json['phone']),
     );
   }
   toJson() {
